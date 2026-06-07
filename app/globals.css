@@ -478,7 +478,7 @@
 }
 .fbadge.b1 {
   left: 4%;
-  top: 12%;
+  top: 42%;
   animation-delay: 0.2s;
 }
 .fbadge.b2 {
@@ -817,11 +817,16 @@ section.block{padding:96px 0;position:relative;}
 .wgallery.paused .wpanel.active .wprog{animation-play-state:paused;}
 @keyframes wfill{to{width:100%;}}
 @media(max-width:880px){
-  .wgallery{flex-direction:column;height:auto;}
-  .wpanel{flex:none;height:280px;}
-  .wpanel.active{height:430px;}
-  .wlabel{writing-mode:horizontal-tb;transform:none;top:0;bottom:auto;}
-  .wpanel.active .wlabel{display:none;}
+  .wgallery{flex-direction:column;height:auto;gap:14px;}
+  /* On touch there's no hover, so every card shows its full content
+     instead of relying on the expand-on-active interaction. */
+  .wpanel,.wpanel.active{flex:none;height:auto;min-height:300px;}
+  .wlabel{display:none;}
+  .wcontent{position:relative;opacity:1;transform:none;pointer-events:auto;padding:96px 24px 30px;}
+  .wcontent p{max-width:none;}
+  .wmetric{opacity:1;transform:none;}
+  .wshade,.wpanel:not(.active) .wshade{background:linear-gradient(180deg,rgba(6,8,7,.18),rgba(6,8,7,.5) 40%,rgba(6,8,7,.9));}
+  .wprog{display:none;}
 }
 
 /* ===== PROCESS — orbital diagram (light) ===== */
@@ -946,4 +951,100 @@ footer .logo-img.foot{height:76px;}
   .srow.active .sprog i{animation:none;width:100%;}
   .pane.show .d-ui .blk,.pane.show .d-code .cl,.pane.show .d-phone .ptile,.pane.show .d-chart i,.pane.show .d-ring .rt circle.fg{animation:none;}
   .wpanel.active .wprog{animation:none;width:100%;}
+}
+
+/* ============================================================
+   MOBILE NAV (hamburger + dropdown)
+   ============================================================ */
+.nav-burger{
+  display:none;
+  background:transparent;border:none;color:#fff;cursor:pointer;
+  width:42px;height:42px;border-radius:10px;align-items:center;justify-content:center;
+  transition:background .2s;
+}
+.nav-burger:hover{background:rgba(255,255,255,.08);}
+.nav-mobile{
+  position:absolute;top:100%;left:0;right:0;z-index:50;
+  background:var(--dark-2);border-bottom:1px solid var(--line-d);
+  display:flex;flex-direction:column;padding:10px 28px 22px;
+}
+.nav-mobile a{
+  color:#cdd3ce;font-weight:600;font-size:16px;padding:14px 2px;
+  border-bottom:1px solid var(--line-d);transition:color .2s;
+}
+.nav-mobile a:last-of-type{border-bottom:none;}
+.nav-mobile a:hover{color:#fff;}
+.nav-mobile .btn{margin-top:16px;justify-content:center;}
+@media(max-width:880px){
+  .nav-links{display:none;}
+  .nav-burger{display:inline-flex;}
+  .nav-cta{display:none;}
+  .nav-inner{height:66px;}
+  .logo-img{height:48px;}
+}
+
+/* ============================================================
+   MOBILE REFINEMENTS
+   ============================================================ */
+/* announcement bar: let long copy breathe instead of clipping at 42px */
+@media(max-width:600px){
+  .announce{font-size:12px;}
+  .announce-inner{height:auto;min-height:42px;padding:8px 32px 8px 0;text-align:center;}
+}
+
+/* hero: tighten the top, scale the fanned deck so it stops overflowing */
+@media(max-width:820px){
+  .hero{padding-top:44px;}
+  .stage{height:380px;}
+  .deck{transform:scale(.74);transform-origin:50% 0;}
+}
+@media(max-width:560px){
+  .stage{height:330px;margin-top:14px;}
+  .deck{transform:scale(.58);transform-origin:50% 0;}
+  .flame{width:430px;height:430px;bottom:-300px;}
+}
+@media(max-width:400px){
+  .stage{height:300px;}
+  .deck{transform:scale(.5);transform-origin:50% 0;}
+}
+
+/* generic spacing on small screens */
+@media(max-width:600px){
+  section.block{padding:64px 0;}
+  .wrap{padding:0 20px;}
+  .vlines{padding:0 20px;}
+  .wwd-head{margin-bottom:32px;}
+}
+
+/* service explorer code demo can overflow horizontally on narrow phones */
+@media(max-width:560px){
+  .wwd-stage{min-height:420px;}
+  .pane{padding:26px 24px;}
+  .d-code{font-size:11px;overflow:hidden;}
+}
+
+/* process orbital: shrink the radius/nodes so side nodes don't clip off-screen */
+@media(max-width:600px){
+  .orbit{height:560px;}
+  .onode{transform:rotate(calc(var(--a) + var(--rot))) translateY(-190px) rotate(calc(-1 * (var(--a) + var(--rot))));}
+  .onode .nbtn{width:54px;height:54px;}
+  .onode .olabel{font-size:11.5px;}
+  .ocard{width:250px;}
+}
+@media(max-width:400px){
+  .orbit{height:480px;}
+  .onode{transform:rotate(calc(var(--a) + var(--rot))) translateY(-150px) rotate(calc(-1 * (var(--a) + var(--rot))));}
+  .onode .nbtn{width:48px;height:48px;}
+  .onode .olabel{font-size:11px;}
+  .ocard{width:220px;padding:18px 18px 20px;}
+  .oc-title{font-size:18px;}
+  .orbit-ring{inset:30px;}
+  .orbit-ring.r2{inset:66px;}
+}
+
+/* clients: comfortable padding once cards are stacked */
+@media(max-width:560px){
+  .ccard{padding:24px 22px;}
+  .cc-av{width:52px;height:52px;}
+  .cl-stat{min-width:0;flex:1;padding:16px 18px;}
 }

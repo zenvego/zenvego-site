@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronRight, ArrowRight } from "lucide-react";
 import { smoothScrollTo } from "./smoothScroll";
+import { openProjectModal } from "./ProjectModal";
 
 const LINKS = [
   { label: "Services", href: "#services" },
@@ -52,13 +53,16 @@ export default function Navbar() {
           ))}
         </nav>
 
-        <a
-          href="#contact"
+        <button
+          type="button"
           className="btn btn-green nav-cta"
-          onClick={(e) => handle(e, "#contact")}
+          onClick={() => {
+            setOpen(false);
+            openProjectModal();
+          }}
         >
           Start a project
-        </a>
+        </button>
 
         <button
           type="button"
@@ -72,20 +76,34 @@ export default function Navbar() {
       </div>
 
       {open && (
-        <div className="nav-mobile">
-          {LINKS.map((l) => (
-            <a key={l.href} href={l.href} onClick={(e) => handle(e, l.href)}>
-              {l.label}
-            </a>
-          ))}
-          <a
-            href="#contact"
-            className="btn btn-green"
-            onClick={(e) => handle(e, "#contact")}
-          >
-            Start a project
-          </a>
-        </div>
+        <>
+          <button
+            type="button"
+            className="nav-scrim"
+            aria-label="Close menu"
+            onClick={() => setOpen(false)}
+          />
+          <div className="nav-mobile" role="dialog" aria-modal="true">
+            <nav className="nav-mobile-links">
+              {LINKS.map((l) => (
+                <a key={l.href} href={l.href} onClick={(e) => handle(e, l.href)}>
+                  <span>{l.label}</span>
+                  <ChevronRight size={18} strokeWidth={2.2} />
+                </a>
+              ))}
+            </nav>
+            <button
+              type="button"
+              className="btn btn-green nav-mobile-cta"
+              onClick={() => {
+                setOpen(false);
+                openProjectModal();
+              }}
+            >
+              Start a project <ArrowRight size={17} strokeWidth={2.4} />
+            </button>
+          </div>
+        </>
       )}
     </header>
   );

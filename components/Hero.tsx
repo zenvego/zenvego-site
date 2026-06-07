@@ -1,6 +1,6 @@
 "use client";
 
-import { smoothScrollTo } from "./smoothScroll";
+import { openProjectModal } from "./ProjectModal";
 import Rating from "./Rating";
 import PhoneMockups from "./PhoneMockups";
 import FloatingBadges from "./FloatingBadges";
@@ -21,13 +21,13 @@ export default function Hero() {
           ambitious teams.
         </p>
         <div className="hero-cta">
-          <a
-            href="#contact"
+          <button
+            type="button"
             className="btn btn-green"
-            onClick={(e) => smoothScrollTo(e, "#contact")}
+            onClick={openProjectModal}
           >
             Get started today →
-          </a>
+          </button>
         </div>
         <Rating />
       </div>

@@ -7,6 +7,7 @@ import Process from "@/components/Process";
 import Clients from "@/components/Clients";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
+import ProjectModal from "@/components/ProjectModal";
 
 export default function Home() {
   return (
@@ -22,6 +23,7 @@ export default function Home() {
       <Process />
       <Clients />
       <Footer />
+      <ProjectModal />
     </>
   );
 }

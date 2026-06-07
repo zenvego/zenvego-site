@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { Star } from "lucide-react";
 import { smoothScrollTo } from "./smoothScroll";
+import { openProjectModal } from "./ProjectModal";
 
 type Testimonial = { n: string; r: string; rate: number; q: string };
 
@@ -87,7 +88,7 @@ export default function Clients() {
               </div>
               <div className="cl-actions">
                 <a href="#work" className="btn cl-ghost" onClick={(e) => smoothScrollTo(e, "#work")}>See all projects</a>
-                <a href="#contact" className="btn cl-light" onClick={(e) => smoothScrollTo(e, "#contact")}>Contact now</a>
+                <button type="button" className="btn cl-light" onClick={openProjectModal}>Contact now</button>
               </div>
             </div>
             <div className="cl-right">

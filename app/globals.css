@@ -931,14 +931,12 @@ section.block{padding:96px 0;position:relative;}
 .orbit-sec{background:var(--cream);color:var(--ink);overflow:hidden;}
 .orbit-wrap{display:flex;justify-content:center;margin-top:18px;position:relative;}
 .orbit-wrap::before{content:"";position:absolute;width:680px;height:680px;border-radius:50%;background:radial-gradient(circle,rgba(76,196,106,.08),transparent 66%);filter:blur(36px);top:50%;left:50%;transform:translate(-50%,-50%);}
-.orbit{position:relative;width:760px;height:760px;max-width:94vw;}
-@media(max-width:780px){.orbit{height:680px;}}
-@media(max-width:640px){.orbit{height:560px;}}
-.orbit-ring{position:absolute;inset:62px;border-radius:50%;border:1.5px dashed rgba(20,24,26,.16);}
-.orbit-ring.r2{inset:120px;border:1px solid rgba(20,24,26,.1);}
-.onode{position:absolute;top:50%;left:50%;width:74px;height:104px;margin:-52px 0 0 -37px;border:none;background:transparent;padding:0;cursor:pointer;transform:rotate(calc(var(--a) + var(--rot))) translateY(-322px) rotate(calc(-1 * (var(--a) + var(--rot))));transition:transform 1s cubic-bezier(.4,.05,.2,1);}
-@media(max-width:780px){.onode{transform:rotate(calc(var(--a) + var(--rot))) translateY(-286px) rotate(calc(-1 * (var(--a) + var(--rot))));}}
-@media(max-width:640px){.onode{transform:rotate(calc(var(--a) + var(--rot))) translateY(-232px) rotate(calc(-1 * (var(--a) + var(--rot))));}}
+/* one size variable drives everything so the orbit is always a perfect circle
+   (square box) and the nodes/rings scale with it — no oval, no off-screen nodes */
+.orbit{position:relative;flex:none;--orbit:min(760px,calc(100vw - 56px));width:var(--orbit);height:var(--orbit);}
+.orbit-ring{position:absolute;inset:calc(var(--orbit) * .082);border-radius:50%;border:1.5px dashed rgba(20,24,26,.16);}
+.orbit-ring.r2{inset:calc(var(--orbit) * .158);border:1px solid rgba(20,24,26,.1);}
+.onode{position:absolute;top:50%;left:50%;width:74px;height:104px;margin:-52px 0 0 -37px;border:none;background:transparent;padding:0;cursor:pointer;transform:rotate(calc(var(--a) + var(--rot))) translateY(calc(var(--orbit) * -.424)) rotate(calc(-1 * (var(--a) + var(--rot))));transition:transform 1s cubic-bezier(.4,.05,.2,1);}
 .onode .nbtn{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;margin:0 auto;background:#fff;border:1px solid rgba(20,24,26,.12);color:#6c756e;box-shadow:0 10px 22px -10px rgba(20,24,26,.28);transition:background .5s,border-color .5s,color .5s,box-shadow .5s,transform .5s;}
 .onode .olabel{display:block;text-align:center;margin-top:10px;font-family:var(--ff-display);font-weight:700;font-size:13px;color:var(--body);white-space:nowrap;transition:color .5s;}
 .onode.active .nbtn{background:var(--green);border-color:var(--green);color:#06210f;transform:scale(1.14);box-shadow:0 0 0 7px rgba(76,196,106,.16),0 18px 34px -10px rgba(76,196,106,.65);}
@@ -964,7 +962,7 @@ section.block{padding:96px 0;position:relative;}
 .oc-chips button{display:inline-flex;align-items:center;gap:8px;background:var(--cream);border:1px solid var(--line-l);border-radius:10px;padding:9px 13px;color:var(--ink);font-family:var(--ff-body);font-weight:700;font-size:12.5px;cursor:pointer;transition:background .25s,border-color .25s,transform .25s;}
 .oc-chips button:hover{background:rgba(76,196,106,.12);border-color:rgba(76,196,106,.45);transform:translateY(-2px);}
 .oc-chips button svg{color:var(--green-deep);}
-@media(max-width:640px){.ocard{width:300px;padding:20px 20px 22px;}.oc-title{font-size:19px;}.orbit-ring{inset:40px;}.orbit-ring.r2{inset:84px;}}
+@media(max-width:640px){.ocard{width:300px;padding:20px 20px 22px;}.oc-title{font-size:19px;}}
 @media(prefers-reduced-motion:reduce){.onode{transition:none;}}
 
 /* ===== CLIENTS / TESTIMONIALS — scroll-stacking ===== */
@@ -1282,36 +1280,30 @@ footer .logo-img.foot{height:76px;}
 /* process orbital: shrink the radius/nodes so side nodes don't clip off-screen,
    and slim the centre card so the orbit nodes stay visible around it */
 @media(max-width:600px){
-  .orbit{height:520px;}
-  .onode{transform:rotate(calc(var(--a) + var(--rot))) translateY(-198px) rotate(calc(-1 * (var(--a) + var(--rot))));}
   .onode .nbtn{width:48px;height:48px;}
   .onode .nbtn svg{width:20px;height:20px;}
   .onode .olabel{font-size:11px;margin-top:7px;}
-  /* compact card */
-  .ocard{width:228px;padding:16px 16px 18px;border-radius:16px;transform:translate(-50%,-48%);}
+  /* compact card — trimmed height (2-line desc, single-row chips) so the circle
+     and its nodes stay visible around it instead of being covered */
+  .ocard{width:min(66%,228px);padding:14px 15px 15px;border-radius:16px;transform:translate(-50%,-49%);}
   .oc-badge{font-size:10px;padding:5px 10px;}
   .oc-date{font-size:11px;}
-  .oc-title{font-size:17px;margin-top:11px;}
-  .oc-desc{font-size:12px;margin-top:6px;line-height:1.45;}
-  .oc-rule{margin:13px 0;}
+  .oc-title{font-size:16px;margin-top:9px;}
+  .oc-desc{font-size:11.5px;margin-top:5px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .oc-rule{margin:11px 0;}
   .oc-bar-row{font-size:12px;}
-  .oc-conn-label{font-size:10px;margin-top:14px;}
-  .oc-chips{gap:8px;margin-top:10px;}
-  .oc-chips button{padding:7px 11px;font-size:11px;}
-  .orbit-ring{inset:36px;}
-  .orbit-ring.r2{inset:74px;}
+  .oc-bar{margin-top:8px;}
+  .oc-conn-label{font-size:10px;margin-top:11px;}
+  .oc-chips{gap:7px;margin-top:9px;flex-wrap:nowrap;}
+  .oc-chips button{flex:1;justify-content:center;padding:7px 8px;font-size:10.5px;gap:5px;}
 }
 @media(max-width:400px){
-  .orbit{height:480px;}
-  .onode{transform:rotate(calc(var(--a) + var(--rot))) translateY(-176px) rotate(calc(-1 * (var(--a) + var(--rot))));}
-  .onode .nbtn{width:44px;height:44px;}
+  .onode .nbtn{width:42px;height:42px;}
   .onode .nbtn svg{width:18px;height:18px;}
-  .onode .olabel{font-size:10.5px;}
-  .ocard{width:206px;padding:14px 14px 16px;}
-  .oc-title{font-size:16px;margin-top:9px;}
-  .oc-desc{font-size:11.5px;}
-  .orbit-ring{inset:28px;}
-  .orbit-ring.r2{inset:60px;}
+  .onode .olabel{font-size:10.5px;margin-top:6px;}
+  .ocard{width:min(70%,210px);padding:12px 13px 13px;}
+  .oc-title{font-size:15px;margin-top:8px;}
+  .oc-desc{font-size:11px;}
 }
 
 /* clients: comfortable padding once cards are stacked */

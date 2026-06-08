@@ -799,7 +799,7 @@ section.block{padding:96px 0;position:relative;}
     transition:max-height .5s cubic-bezier(.2,.7,.3,1),opacity .35s ease,margin-top .4s cubic-bezier(.2,.7,.3,1);
   }
   /* adjacent-sibling drives the reveal — no JS class, no layout race */
-  .srow.active + .srow-stage{max-height:640px;opacity:1;margin-top:14px;}
+  .srow.active + .srow-stage{max-height:900px;opacity:1;margin-top:14px;}
   .mstage{
     position:relative;display:flex;min-height:340px;border-radius:var(--radius-lg);
     background:var(--dark);overflow:hidden;border:1px solid rgba(255,255,255,.07);

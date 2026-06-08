@@ -791,15 +791,21 @@ section.block{padding:96px 0;position:relative;}
 @media(max-width:900px){
   /* shared right-hand stage is replaced by the per-row inline ones */
   #wwdStage{display:none;}
+  /* the single-column grid track must be allowed to shrink to the viewport;
+     without this, wide non-wrapping pane content (code demo / block grid) blows
+     the 1fr track out past the screen and clips every card on the right */
+  .wwd{grid-template-columns:minmax(0,1fr);}
+  .wwd-list{min-width:0;}
   /* sitem becomes a real flex child so the row + its stage stack as one unit */
-  .sitem{display:flex;flex-direction:column;}
+  .sitem{display:flex;flex-direction:column;min-width:0;}
+  .srow,.srow-stage,.mstage,.mstage .pane{min-width:0;max-width:100%;}
   .srow .sprog{display:none;}
   .srow-stage{
     display:block;max-height:0;opacity:0;overflow:hidden;margin-top:0;
     transition:max-height .5s cubic-bezier(.2,.7,.3,1),opacity .35s ease,margin-top .4s cubic-bezier(.2,.7,.3,1);
   }
   /* adjacent-sibling drives the reveal — no JS class, no layout race */
-  .srow.active + .srow-stage{max-height:900px;opacity:1;margin-top:14px;}
+  .srow.active + .srow-stage{max-height:640px;opacity:1;margin-top:14px;}
   .mstage{
     position:relative;display:flex;min-height:340px;border-radius:var(--radius-lg);
     background:var(--dark);overflow:hidden;border:1px solid rgba(255,255,255,.07);
@@ -1034,6 +1040,9 @@ section.block{padding:96px 0;position:relative;}
 /* soft green-cream tint + faint square grid (vignette-faded toward the edges) */
 .clm{
   position:relative;
+  /* clip the fanned cards that peek past the screen edges so they don't add a
+     phantom horizontal scroll; `clip` (not `hidden`) keeps the sticky animation working */
+  overflow-x:clip;
   padding:0 0 14px;
   background-color:#eef5ef;
   background-image:

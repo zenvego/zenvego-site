@@ -4,6 +4,7 @@ import Hero from "@/components/Hero";
 import WhatWeDo from "@/components/WhatWeDo";
 import WorkGallery from "@/components/WorkGallery";
 import Process from "@/components/Process";
+import Studio from "@/components/Studio";
 import Clients from "@/components/Clients";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
@@ -21,6 +22,7 @@ export default function Home() {
       <WhatWeDo />
       <WorkGallery />
       <Process />
+      <Studio />
       <Clients />
       <Footer />
       <ProjectModal />

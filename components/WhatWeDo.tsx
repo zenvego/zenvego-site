@@ -368,11 +368,6 @@ export default function WhatWeDo() {
               ways we help teams ship — hover or tap to dive in.
             </p>
           </div>
-          <div className="side">
-            <b>5</b>
-            core capabilities, one accountable team from first sketch to shipped
-            code.
-          </div>
         </div>
 
         <div className="wwd" id="wwd" ref={wwdRef}>

@@ -22,6 +22,9 @@
   --line-d: rgba(255, 255, 255, 0.09);
   --line-l: #e9ede9;
   --cream: #f5f8f5;
+  /* single uniform backdrop shared by every light section (everything below
+     the dark hero) so there are no tonal seams where sections meet */
+  --page-bg: #e9f3ec;
   --radius: 18px;
   --radius-lg: 26px;
   --maxw: 1180px;
@@ -36,7 +39,14 @@
     scroll-behavior: smooth;
   }
   body {
-    background: #fff;
+    /* one continuous backdrop for the whole page — a flat mint wash with a
+       single faint grid. The grid tiles from the body origin so its lines run
+       unbroken across every section boundary (no seams). The dark hero, nav,
+       announcement bar and footer paint their own opaque backgrounds on top. */
+    background-color: var(--page-bg);
+    background-image: linear-gradient(rgba(76, 196, 106, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(76, 196, 106, 0.05) 1px, transparent 1px);
+    background-size: 48px 48px, 48px 48px;
     color: var(--ink);
     font-family: var(--font-body), system-ui, sans-serif;
     line-height: 1.6;
@@ -965,15 +975,130 @@ section.block{padding:96px 0;position:relative;}
 @media(max-width:640px){.ocard{width:300px;padding:20px 20px 22px;}.oc-title{font-size:19px;}}
 @media(prefers-reduced-motion:reduce){.onode{transition:none;}}
 
+/* ===== STUDIO — dark "about" band with counting stats + light-trace border ===== */
+/* registered angle so the conic gradient can be animated smoothly */
+@property --studio-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+/* light mint wash + faint grid, matching the surrounding sections */
+.studio-sec{
+  /* transparent — inherits the body's unified mint wash + grid */
+  background:transparent;
+  color:var(--ink);
+}
+.studio-grid-wrap{display:grid;grid-template-columns:1.02fr 1fr;gap:54px;align-items:center;}
+@media(max-width:900px){.studio-grid-wrap{grid-template-columns:1fr;gap:40px;}}
+
+.studio-title{
+  font-family:var(--ff-display);
+  font-weight:800;
+  font-size:clamp(30px,4vw,52px);
+  letter-spacing:-0.03em;
+  line-height:1.04;
+  margin-top:20px;
+  color:var(--ink);
+}
+.studio-title .grnk{color:var(--green-deep);}
+.studio-lead{
+  color:var(--body);
+  font-size:clamp(15px,1.5vw,17px);
+  line-height:1.65;
+  margin-top:24px;
+  max-width:480px;
+}
+
+/* the unified rounded card, split into a 2×2 grid by faint dividers */
+.studio-grid{
+  position:relative;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1px;                                  /* the gap IS the divider line */
+  background:rgba(76,196,106,.16);          /* divider colour shows through gaps */
+  border-radius:var(--radius-lg);
+  border:1px solid rgba(76,196,106,.18);
+  overflow:hidden;
+  box-shadow:0 30px 70px -40px rgba(20,24,26,.35);
+}
+.studio-cell{
+  background:linear-gradient(165deg,#f0f7f1 0%,#e3efe7 100%);
+  padding:40px 34px 34px;
+  min-height:200px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  transition:background .4s,transform .4s;
+}
+.studio-cell:hover{
+  background:linear-gradient(165deg,#ffffff 0%,#eef7f1 100%);
+}
+.studio-num{
+  font-family:var(--ff-display);
+  font-weight:800;
+  font-size:clamp(40px,4.4vw,58px);
+  line-height:1;
+  letter-spacing:-0.02em;
+  color:var(--ink);
+  font-variant-numeric:tabular-nums;        /* digits don't reflow while counting */
+}
+.studio-lbl{
+  color:var(--faint-d);
+  font-size:14px;
+  margin-top:24px;
+}
+
+/* travelling-light border: a conic sweep masked to the 1px frame.
+   Hidden by default; revealed + animated on first scroll-in (.run) and
+   again on every hover of the card. */
+.studio-grid::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  padding:1.5px;
+  background:conic-gradient(
+    from var(--studio-angle),
+    transparent 0deg,
+    transparent 62deg,
+    var(--green) 82deg,
+    var(--green-bright) 90deg,
+    var(--green) 98deg,
+    transparent 118deg,
+    transparent 360deg
+  );
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+          mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask-composite:exclude;
+  opacity:0;
+  transition:opacity .5s ease;
+  pointer-events:none;
+  z-index:2;
+}
+.studio-grid.run::before,
+.studio-grid:hover::before{
+  opacity:1;
+  animation:studio-sweep 1.7s cubic-bezier(.4,.05,.2,1);
+}
+@keyframes studio-sweep{
+  from{--studio-angle:0deg;}
+  to{--studio-angle:360deg;}
+}
+
+@media(max-width:520px){
+  .studio-grid{grid-template-columns:1fr;}
+  .studio-cell{min-height:0;padding:30px 28px;}
+}
+@media(prefers-reduced-motion:reduce){
+  .studio-grid.run::before,.studio-grid:hover::before{animation:none;}
+}
+
 /* ===== CLIENTS / TESTIMONIALS — scroll-stacking ===== */
 .clients{
   position:relative;color:var(--ink);
-  background-color:#eef5ef;
-  background-image:
-    radial-gradient(118% 68% at 50% 42%, rgba(238,245,239,0) 36%, #e7f0e8 100%),
-    linear-gradient(rgba(20,24,26,.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(20,24,26,.05) 1px, transparent 1px);
-  background-size:auto, 32px 32px, 32px 32px;
+  /* transparent — inherits the body's unified mint wash + grid */
+  background:transparent;
 }
 .clients-track{height:230vh;}
 .clients-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;overflow:hidden;background:radial-gradient(75% 70% at 60% 50%, rgba(76,196,106,.24), rgba(76,196,106,0) 72%);}
@@ -1042,12 +1167,8 @@ section.block{padding:96px 0;position:relative;}
      phantom horizontal scroll; `clip` (not `hidden`) keeps the sticky animation working */
   overflow-x:clip;
   padding:0 0 14px;
-  background-color:#eef5ef;
-  background-image:
-    radial-gradient(118% 68% at 50% 42%, rgba(238,245,239,0) 36%, #e7f0e8 100%),
-    linear-gradient(rgba(20,24,26,.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(20,24,26,.05) 1px, transparent 1px);
-  background-size:auto, 32px 32px, 32px 32px;
+  /* transparent — inherits the body's unified mint wash + grid */
+  background:transparent;
 }
 /* the scroll track that drives the animation */
 .clm-scroll{height:260vh;}
@@ -1164,6 +1285,30 @@ footer .logo-img.foot{height:76px;}
 .foot-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:54px;padding-top:26px;border-top:1px solid var(--line-d);color:var(--faint-d);font-size:13px;flex-wrap:wrap;gap:12px;}
 @media(max-width:780px){.foot-grid{grid-template-columns:1fr 1fr;}}
 
+/* ============================================================
+   SECTION AMBIENT BACKGROUNDS  (soft green wash + faint grid)
+   Hero / nav / announce / footer stay dark — everything else
+   gets a tinted, gently varied backdrop inspired by the handoff.
+   Grid + glow live entirely in `background` so they always sit
+   behind content (no z-index juggling needed).
+   ============================================================ */
+
+/* Every light section is transparent so the body's single mint wash + grid
+   shows through with no tonal step or grid misalignment between sections.
+   The IDs/`.clients#testimonials` are listed explicitly to override the
+   earlier per-section background rules (`.cream`, `.orbit-sec`, etc.). */
+#services,
+#work,
+#process,
+.studio-sec,
+.clients,
+.clients#testimonials{
+  background:transparent;
+}
+/* card-stack fades blend into the unified page background */
+.cl-right::before{background:linear-gradient(var(--page-bg),transparent);}
+.cl-right::after{background:linear-gradient(transparent,var(--page-bg));}
+
 /* reveal */
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1);}
 .reveal.in{opacity:1;transform:none;}
@@ -1278,8 +1423,10 @@ footer .logo-img.foot{height:76px;}
 }
 
 /* process orbital: shrink the radius/nodes so side nodes don't clip off-screen,
-   and slim the centre card so the orbit nodes stay visible around it */
-@media(max-width:600px){
+   and slim the centre card so the orbit nodes stay visible around it.
+   Runs to 640px so it covers the .ocard width:300px rule above — otherwise the
+   601–640px band keeps a wide, full-height card over full-size nodes (overlap). */
+@media(max-width:640px){
   .onode .nbtn{width:48px;height:48px;}
   .onode .nbtn svg{width:20px;height:20px;}
   .onode .olabel{font-size:11px;margin-top:7px;}

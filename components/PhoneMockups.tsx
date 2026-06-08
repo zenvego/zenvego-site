@@ -47,14 +47,14 @@ export default function PhoneMockups() {
     let timer = window.setInterval(() => {
       order.unshift(order.pop() as number);
       layout();
-    }, 2400);
+    }, 2000);
 
     const pause = () => window.clearInterval(timer);
     const resume = () => {
       timer = window.setInterval(() => {
         order.unshift(order.pop() as number);
         layout();
-      }, 2400);
+      }, 2000);
     };
 
     stage.addEventListener("mouseenter", pause);

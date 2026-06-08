@@ -230,7 +230,10 @@ export default function WhatWeDo() {
 
     const rows = Array.from(wwd.querySelectorAll<HTMLElement>(".srow"));
     const panes = Array.from(stage.querySelectorAll<HTMLElement>(".pane"));
+    // mobile-only inline dashboards, one per service row
+    const mPanes = Array.from(wwd.querySelectorAll<HTMLElement>(".srow-stage .pane"));
     const accents = SERVICES.map((s) => s.accent);
+    const mq = window.matchMedia("(max-width: 900px)");
     const DWELL = 6000;
     let cur = 0;
     let timer: number | null = null;
@@ -267,10 +270,16 @@ export default function WhatWeDo() {
       cur = i;
       rows.forEach((r, idx) => r.classList.toggle("active", idx === i));
       panes.forEach((p, idx) => p.classList.toggle("show", idx === i));
+      mPanes.forEach((p, idx) => p.classList.toggle("show", idx === i));
       stage!.style.setProperty("--accent-c", accents[i]);
       const pane = panes[i];
       restartPaneAnims(pane);
       countUp(pane);
+      const mpane = mPanes[i];
+      if (mpane) {
+        restartPaneAnims(mpane);
+        countUp(mpane);
+      }
       if (manual) resetAuto();
     }
     function next() {
@@ -278,14 +287,16 @@ export default function WhatWeDo() {
     }
     function resetAuto() {
       if (timer) clearInterval(timer);
-      if (hovering) return;
+      // mobile is scroll-driven — no auto-rotation there
+      if (hovering || mq.matches) return;
       timer = window.setInterval(() => {
-        if (!hovering) next();
+        if (!hovering && !mq.matches) next();
       }, DWELL);
     }
     rows.forEach((r, idx) => {
       r.addEventListener("click", () => select(idx, true));
       r.addEventListener("mouseenter", () => {
+        if (mq.matches) return;
         hovering = true;
         wwd.classList.add("paused");
         if (timer) clearInterval(timer);
@@ -293,6 +304,7 @@ export default function WhatWeDo() {
       });
     });
     wwd.addEventListener("mouseleave", () => {
+      if (mq.matches) return;
       hovering = false;
       wwd.classList.remove("paused");
       resetAuto();
@@ -306,13 +318,37 @@ export default function WhatWeDo() {
         resetAuto();
       }
     }
+    // Mobile: the active card follows scroll — we open the dashboard of whichever
+    // card has scrolled up to a line near the top of the viewport. We DON'T move
+    // the page (no scrollBy); the dashboard just opens where the card already is.
+    // Choosing by header top (which doesn't move when its own dashboard opens
+    // below it) keeps the pick monotonic, so neighbours can't flicker/fight.
+    let sraf = 0;
+    function onScroll() {
+      maybeStart();
+      if (!mq.matches) return;
+      if (sraf) return;
+      sraf = requestAnimationFrame(() => {
+        sraf = 0;
+        const line = (window.innerHeight || 800) * 0.32;
+        let idx = 0;
+        for (let k = 0; k < rows.length; k++) {
+          if (rows[k].getBoundingClientRect().top <= line) idx = k;
+          else break;
+        }
+        if (idx !== cur) select(idx, false);
+      });
+    }
     maybeStart();
-    window.addEventListener("scroll", maybeStart, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
     const t = window.setTimeout(maybeStart, 1200);
 
     return () => {
       if (timer) clearInterval(timer);
-      window.removeEventListener("scroll", maybeStart);
+      if (sraf) cancelAnimationFrame(sraf);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
       window.clearTimeout(t);
     };
   }, []);
@@ -344,10 +380,10 @@ export default function WhatWeDo() {
             {SERVICES.map((s, i) => {
               const Icon = s.Icon;
               return (
+                <div className="sitem" key={i}>
                 <div
                   className={`srow${i === 0 ? " active" : ""}`}
                   data-i={i}
-                  key={i}
                   style={{ ["--accent-c" as string]: s.accent, ["--dwell" as string]: `${s.dwell}ms` }}
                 >
                   <div className="srow-top">
@@ -369,6 +405,17 @@ export default function WhatWeDo() {
                     </div>
                   </div>
                   <div className="sprog"><i /></div>
+                </div>
+                {/* mobile-only: this card's dashboard, inline right beneath it */}
+                <div className="srow-stage" aria-hidden style={{ ["--accent-c" as string]: s.accent }}>
+                  <div className="mstage">
+                    <div className="sgrid" />
+                    <div className="sglow" />
+                    <div className="pane">
+                      <Pane index={i} />
+                    </div>
+                  </div>
+                </div>
                 </div>
               );
             })}

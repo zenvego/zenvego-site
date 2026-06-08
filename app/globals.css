@@ -352,7 +352,7 @@
   box-shadow: 0 40px 84px -22px rgba(0, 0, 0, 0.55),
     0 10px 26px -10px rgba(0, 0, 0, 0.32);
   overflow: hidden;
-  transition: transform 0.9s cubic-bezier(0.4, 0.05, 0.2, 1), opacity 0.9s;
+  transition: transform 0.65s cubic-bezier(0.33, 1, 0.68, 1), opacity 0.65s ease;
   color: #14181a;
   will-change: transform;
 }
@@ -530,13 +530,9 @@
   }
 }
 @media (max-width: 680px) {
-  .fbadge.b1 {
-    left: -2%;
-  }
-  .fbadge.b2 {
-    right: -2%;
-  }
-  .fbadge.b3 {
+  /* Floating badges are decorative; on narrow screens they collide with the
+     headline, CTA, and rating — hide them so the hero stays clean. */
+  .fbadge {
     display: none;
   }
 }
@@ -785,6 +781,36 @@ section.block{padding:96px 0;position:relative;}
 .pane.show .d-ring .rt circle.fg{animation:ringfill 1.2s cubic-bezier(.3,.7,.3,1) both;}
 @keyframes ringfill{from{stroke-dashoffset:339;}to{stroke-dashoffset:var(--off,40);}}
 
+/* the per-row inline dashboard is desktop-hidden — desktop uses the shared stage */
+.sitem{display:contents;}
+.srow-stage{display:none;}
+
+/* ===== MOBILE: the active card's dashboard expands inline beneath it =====
+   Accordion — only the scrolled-to card is open. We never move the page;
+   the dashboard simply opens where the card already sits. */
+@media(max-width:900px){
+  /* shared right-hand stage is replaced by the per-row inline ones */
+  #wwdStage{display:none;}
+  /* sitem becomes a real flex child so the row + its stage stack as one unit */
+  .sitem{display:flex;flex-direction:column;}
+  .srow .sprog{display:none;}
+  .srow-stage{
+    display:block;max-height:0;opacity:0;overflow:hidden;margin-top:0;
+    transition:max-height .5s cubic-bezier(.2,.7,.3,1),opacity .35s ease,margin-top .4s cubic-bezier(.2,.7,.3,1);
+  }
+  /* adjacent-sibling drives the reveal — no JS class, no layout race */
+  .srow.active + .srow-stage{max-height:640px;opacity:1;margin-top:14px;}
+  .mstage{
+    position:relative;display:flex;min-height:340px;border-radius:var(--radius-lg);
+    background:var(--dark);overflow:hidden;border:1px solid rgba(255,255,255,.07);
+    box-shadow:0 30px 70px -42px rgba(0,0,0,.7);
+  }
+  .mstage .sgrid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:40px 40px;-webkit-mask-image:radial-gradient(ellipse 70% 70% at 50% 30%,#000,transparent 75%);mask-image:radial-gradient(ellipse 70% 70% at 50% 30%,#000,transparent 75%);}
+  .mstage .sglow{position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,var(--accent-c,var(--green)),transparent 65%);filter:blur(60px);opacity:.32;top:-80px;right:-60px;}
+  /* the pane lays out statically (not the absolute overlay it is on desktop) */
+  .mstage .pane{position:static;inset:auto;flex:1;opacity:1;visibility:visible;transform:none;padding:26px 24px;}
+}
+
 /* ===== WORK — expanding gallery ===== */
 .cream{background:var(--cream);}
 .sec-head{max-width:600px;margin:0 auto 50px;text-align:center;}
@@ -816,6 +842,19 @@ section.block{padding:96px 0;position:relative;}
 .wpanel.active .wprog{animation:wfill var(--wdwell,4200ms) linear forwards;}
 .wgallery.paused .wpanel.active .wprog{animation-play-state:paused;}
 @keyframes wfill{to{width:100%;}}
+/* Per-mockup float — each keyframe bakes in that card's fan transform and
+   adds its own vertical drift, so paired with distinct durations/delays the
+   cards bob upward independently instead of moving as one block. */
+@keyframes wf-dp1{0%,100%{transform:translateY(0) translateX(66px) rotate(-8deg) scale(.88);}50%{transform:translateY(-13px) translateX(66px) rotate(-8deg) scale(.88);}}
+@keyframes wf-dp2{0%,100%{transform:translateY(2px) scale(1);}50%{transform:translateY(-19px) scale(1);}}
+@keyframes wf-dp3{0%,100%{transform:translateY(0) translateX(-66px) rotate(8deg) scale(.88);}50%{transform:translateY(-10px) translateX(-66px) rotate(8deg) scale(.88);}}
+@keyframes wf-ds1{0%,100%{transform:translateY(0) translateX(-50%) translate(34px,44px) rotate(3deg);}50%{transform:translateY(-15px) translateX(-50%) translate(34px,44px) rotate(3deg);}}
+@keyframes wf-ds2{0%,100%{transform:translateY(0) translateX(-50%) translate(-34px,2px) rotate(-3deg) scale(.94);}50%{transform:translateY(-9px) translateX(-50%) translate(-34px,2px) rotate(-3deg) scale(.94);}}
+@keyframes wf-mp1{0%,100%{transform:translateY(0) rotate(-9deg) translateY(18px) scale(.9);}50%{transform:translateY(-12px) rotate(-9deg) translateY(18px) scale(.9);}}
+@keyframes wf-mp2{0%,100%{transform:translateY(0) translateY(-4px) scale(1);}50%{transform:translateY(-20px) translateY(-4px) scale(1);}}
+@keyframes wf-mp3{0%,100%{transform:translateY(0) rotate(9deg) translateY(18px) scale(.9);}50%{transform:translateY(-9px) rotate(9deg) translateY(18px) scale(.9);}}
+@keyframes wf-ms1{0%,100%{transform:translateY(0) translateX(-50%) translate(16px,34px) rotate(2.5deg);}50%{transform:translateY(-14px) translateX(-50%) translate(16px,34px) rotate(2.5deg);}}
+@keyframes wf-ms2{0%,100%{transform:translateY(0) translateX(-50%) translate(-16px,2px) rotate(-2.5deg) scale(.95);}50%{transform:translateY(-9px) translateX(-50%) translate(-16px,2px) rotate(-2.5deg) scale(.95);}}
 
 /* fanned phone-mockup trio shown inside an app case-study panel */
 .wphones{position:absolute;left:50%;top:72px;z-index:2;transform:translateX(-50%);display:flex;align-items:center;pointer-events:none;opacity:0;transition:opacity .5s .15s;}
@@ -824,7 +863,10 @@ section.block{padding:96px 0;position:relative;}
 .wphone:nth-child(1){transform:translateX(66px) rotate(-8deg) scale(.88);z-index:1;}
 .wphone:nth-child(2){transform:translateY(2px) scale(1);z-index:3;}
 .wphone:nth-child(3){transform:translateX(-66px) rotate(8deg) scale(.88);z-index:1;}
-.wpanel:not(.active) .wphone{transform:none;}
+.wpanel.active .wphone:nth-child(1){animation:wf-dp1 5.2s ease-in-out infinite;}
+.wpanel.active .wphone:nth-child(2){animation:wf-dp2 6.6s ease-in-out -1.5s infinite;}
+.wpanel.active .wphone:nth-child(3){animation:wf-dp3 5.8s ease-in-out -2.8s infinite;}
+.wpanel:not(.active) .wphone{transform:none;animation:none;}
 
 /* stacked browser-screenshot pair for a web-app case-study panel */
 .wscreens{position:absolute;left:50%;top:74px;z-index:2;width:464px;height:300px;transform:translateX(-50%);pointer-events:none;opacity:0;transition:opacity .5s .15s;}
@@ -832,7 +874,10 @@ section.block{padding:96px 0;position:relative;}
 .wscreen{position:absolute;left:50%;top:0;width:464px;aspect-ratio:3200/1704;object-fit:cover;object-position:top center;border-radius:13px;border:1px solid rgba(255,255,255,.16);background:#0c0e0d;box-shadow:0 26px 60px -22px rgba(0,0,0,.75);transition:transform .6s cubic-bezier(.4,.05,.2,1);}
 .wscreen:nth-child(1){transform:translateX(-50%) translate(34px,44px) rotate(3deg);z-index:2;}
 .wscreen:nth-child(2){transform:translateX(-50%) translate(-34px,2px) rotate(-3deg) scale(.94);z-index:1;}
-.wpanel:not(.active) .wscreen{transform:translateX(-50%);}
+.wpanel.active .wscreen:nth-child(1){animation:wf-ds1 6.2s ease-in-out -.6s infinite;}
+.wpanel.active .wscreen:nth-child(2){animation:wf-ds2 5.4s ease-in-out -2.2s infinite;}
+.wpanel:not(.active) .wscreen{transform:translateX(-50%);animation:none;}
+@media(prefers-reduced-motion:reduce){.wphone,.wscreen{animation:none!important;}}
 
 /* media panels run smaller copy so the visuals are the hero */
 .wpanel--media .wcontent{padding:22px 34px 26px;}
@@ -855,23 +900,25 @@ section.block{padding:96px 0;position:relative;}
   .wshade,.wpanel:not(.active) .wshade{background:linear-gradient(180deg,rgba(6,8,7,.18),rgba(6,8,7,.5) 40%,rgba(6,8,7,.9));}
   .wprog{display:none;}
   /* media panels: always reveal the visuals and push text below them */
-  .wpanel--media{min-height:560px;}
-  /* phones — overlap into a compact, centred fan that fits a narrow screen */
-  .wpanel--phones .wphones{opacity:1;top:60px;justify-content:center;}
+  .wpanel--media{min-height:auto;}
+  /* tighter side gutters and bottom padding so the cards aren't so tall */
+  .wpanel--media .wcontent{padding-left:16px;padding-right:16px;padding-bottom:22px;}
+  /* phones — overlap into a compact, centred fan that fits a narrow screen.
+     On mobile every card is visible, so each phone floats independently. */
+  .wpanel--phones .wphones{opacity:1;top:52px;justify-content:center;}
   .wpanel--phones .wphone{width:min(34vw,158px);margin:0 -4vw;}
   .wpanel--phones .wphone,.wpanel--phones:not(.active) .wphone{transform:none;}
-  .wpanel--phones .wphone:nth-child(1){transform:rotate(-9deg) translateY(18px) scale(.9);z-index:1;}
-  .wpanel--phones .wphone:nth-child(2){transform:translateY(-4px) scale(1);z-index:3;}
-  .wpanel--phones .wphone:nth-child(3){transform:rotate(9deg) translateY(18px) scale(.9);z-index:1;}
-  .wpanel--phones .wcontent{padding-top:calc(min(34vw,158px) * 1.74 + 78px);}
+  .wpanel--phones .wphone:nth-child(1){transform:rotate(-9deg) translateY(18px) scale(.9);z-index:1;animation:wf-mp1 5.2s ease-in-out infinite;}
+  .wpanel--phones .wphone:nth-child(2){transform:translateY(-4px) scale(1);z-index:3;animation:wf-mp2 6.6s ease-in-out -1.5s infinite;}
+  .wpanel--phones .wphone:nth-child(3){transform:rotate(9deg) translateY(18px) scale(.9);z-index:1;animation:wf-mp3 5.8s ease-in-out -2.8s infinite;}
+  .wpanel--phones .wcontent{padding-top:calc(min(34vw,158px) * 1.74 + 70px);}
   /* stacked screens — clamp width so they never overflow a narrow phone */
-  .wpanel--screens{min-height:440px;}
-  .wpanel--screens .wscreens{opacity:1;top:72px;width:min(78vw,440px);height:auto;}
-  .wpanel--screens .wscreen{width:min(78vw,440px);}
+  .wpanel--screens .wscreens{opacity:1;top:60px;width:min(82vw,440px);height:auto;}
+  .wpanel--screens .wscreen{width:min(82vw,440px);}
   .wpanel--screens .wscreen,.wpanel--screens:not(.active) .wscreen{transform:translateX(-50%);}
-  .wpanel--screens .wscreen:nth-child(1){transform:translateX(-50%) translate(16px,38px) rotate(2.5deg);}
-  .wpanel--screens .wscreen:nth-child(2){transform:translateX(-50%) translate(-16px,2px) rotate(-2.5deg) scale(.95);}
-  .wpanel--screens .wcontent{padding-top:calc(min(55vw,280px) + 92px);}
+  .wpanel--screens .wscreen:nth-child(1){transform:translateX(-50%) translate(16px,34px) rotate(2.5deg);animation:wf-ms1 6.2s ease-in-out -.6s infinite;}
+  .wpanel--screens .wscreen:nth-child(2){transform:translateX(-50%) translate(-16px,2px) rotate(-2.5deg) scale(.95);animation:wf-ms2 5.4s ease-in-out -2.2s infinite;}
+  .wpanel--screens .wcontent{padding-top:calc(min(44vw,235px) + 96px);}
 }
 
 /* ===== PROCESS — orbital diagram (light) ===== */
@@ -915,9 +962,17 @@ section.block{padding:96px 0;position:relative;}
 @media(prefers-reduced-motion:reduce){.onode{transition:none;}}
 
 /* ===== CLIENTS / TESTIMONIALS — scroll-stacking ===== */
-.clients{position:relative;background:#fff;color:var(--ink);}
+.clients{
+  position:relative;color:var(--ink);
+  background-color:#eef5ef;
+  background-image:
+    radial-gradient(118% 68% at 50% 42%, rgba(238,245,239,0) 36%, #e7f0e8 100%),
+    linear-gradient(rgba(20,24,26,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(20,24,26,.05) 1px, transparent 1px);
+  background-size:auto, 32px 32px, 32px 32px;
+}
 .clients-track{height:230vh;}
-.clients-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;overflow:hidden;}
+.clients-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;overflow:hidden;background:radial-gradient(75% 70% at 60% 50%, rgba(76,196,106,.24), rgba(76,196,106,0) 72%);}
 .clients-grid{display:grid;grid-template-columns:0.88fr 1.12fr;gap:50px;width:100%;max-width:var(--maxw);margin:0 auto;padding:0 28px;align-items:center;}
 .cl-pill{display:inline-flex;align-items:center;gap:9px;background:var(--cream);border:1px solid var(--line-l);border-radius:999px;padding:8px 16px;font-size:14px;color:var(--body);font-weight:600;}
 .cl-pill .gd{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 9px var(--green);}
@@ -934,24 +989,152 @@ section.block{padding:96px 0;position:relative;}
 .cl-light:hover{background:#000;transform:translateY(-2px);}
 .cl-right{position:relative;height:600px;}
 .cstack{position:absolute;inset:0;}
-.ccard{position:absolute;left:2px;right:2px;background:#fff;border:1px solid var(--line-l);border-radius:24px;padding:30px 34px;box-shadow:0 28px 64px -30px rgba(20,24,26,.34);will-change:transform;}
+.ccard{
+  position:absolute;left:2px;right:2px;
+  border-radius:24px;padding:30px 34px;
+  border:1px solid rgba(76,196,106,.22);
+  background:
+    radial-gradient(130% 90% at 100% 0%, rgba(76,196,106,.18), transparent 55%),
+    linear-gradient(165deg, #16201b 0%, #0d100e 72%);
+  color:#e9eeeb;
+  overflow:hidden;
+  box-shadow:
+    0 30px 60px -26px rgba(0,0,0,.6),
+    0 22px 50px -34px rgba(76,196,106,.55),
+    inset 0 1px 0 rgba(255,255,255,.05);
+  will-change:transform;
+}
+/* green corner accent to match the mobile card */
+.ccard::before{
+  content:"";
+  position:absolute;
+  top:0;left:0;
+  width:72px;height:4px;
+  border-radius:0 0 6px 0;
+  background:linear-gradient(90deg,var(--green),transparent);
+}
 .cc-head{display:flex;align-items:center;gap:16px;}
-.cc-av{width:62px;height:62px;border-radius:16px;flex:none;overflow:hidden;display:grid;place-items:center;font-family:var(--ff-display);font-weight:800;font-size:18px;color:#fff;}
-.cc-name{font-family:var(--ff-display);font-weight:700;font-size:20px;color:var(--ink);}
-.cc-role{color:var(--faint-d);font-size:14.5px;margin-top:3px;}
-.cc-rate{display:flex;align-items:center;gap:9px;margin-top:20px;font-family:var(--ff-display);font-weight:700;font-size:16px;color:var(--ink);}
+.cc-av{width:62px;height:62px;border-radius:16px;flex:none;overflow:hidden;display:grid;place-items:center;font-family:var(--ff-display);font-weight:800;font-size:18px;color:#fff;box-shadow:0 0 0 2px rgba(76,196,106,.5), 0 10px 20px -8px rgba(0,0,0,.7);}
+.cc-name{font-family:var(--ff-display);font-weight:700;font-size:20px;color:#fff;}
+.cc-role{color:#86b699;font-size:14.5px;margin-top:3px;}
+.cc-rate{display:flex;align-items:center;gap:9px;margin-top:20px;font-family:var(--ff-display);font-weight:700;font-size:16px;color:#fff;}
 .cc-rate .stars{display:inline-flex;gap:2px;}
 .cc-rate .stars svg{width:18px;height:18px;}
 .cc-rate .stars .on{color:#f6b51e;}
-.cc-rate .stars .off{color:#d6dad6;}
-.cc-q{color:var(--body);font-size:16px;line-height:1.62;margin-top:18px;}
+.cc-rate .stars .off{color:rgba(255,255,255,.18);}
+.cc-q{color:#c5cfca;font-size:16px;line-height:1.62;margin-top:18px;}
+/* Desktop keeps the CSS scroll-stack; mobile swaps to the motion variant (see .clm below) */
+.clients-mobile{display:none;}
 @media(max-width:880px){
-  .clients-track{height:auto;}
-  .clients-sticky{position:static;height:auto;padding:80px 0;}
-  .clients-grid{grid-template-columns:1fr;gap:46px;}
-  .cl-right{height:auto;}
-  .cstack{position:static;}
-  .ccard{position:relative;left:0;right:0;transform:none!important;margin-bottom:18px;}
+  .clients-desktop{display:none;}
+  .clients-mobile{display:block;}
+}
+
+/* ===== CLIENTS — mobile motion fan/stack variant ===== */
+/* soft green-cream tint + faint square grid (vignette-faded toward the edges) */
+.clm{
+  position:relative;
+  padding:0 0 14px;
+  background-color:#eef5ef;
+  background-image:
+    radial-gradient(118% 68% at 50% 42%, rgba(238,245,239,0) 36%, #e7f0e8 100%),
+    linear-gradient(rgba(20,24,26,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(20,24,26,.05) 1px, transparent 1px);
+  background-size:auto, 32px 32px, 32px 32px;
+}
+/* the scroll track that drives the animation */
+.clm-scroll{height:260vh;}
+/* heading + cards pinned together; the green glow (element background) stays
+   pinned behind the stack and renders under every card */
+.clm-sticky{
+  position:sticky;top:0;min-height:100svh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:40px;padding:24px 0;
+  background:radial-gradient(66% 40% at 50% 60%, rgba(76,196,106,.18), rgba(76,196,106,0) 72%);
+}
+.clm-head{text-align:center;padding:0 22px;}
+.clm-head .cl-pill{margin:0 auto;}
+.clm-head h2{font-family:var(--ff-display);font-weight:800;font-size:clamp(32px,8vw,44px);letter-spacing:-.03em;line-height:1.04;margin-top:16px;color:var(--ink);}
+.clm-head .cl-sub{color:var(--body);font-size:15.5px;margin:10px auto 0;max-width:360px;}
+.clm-cards{width:min(88vw,360px);height:380px;margin:0;}
+/* override the component's centered tailwind defaults — premium dark, green-tinted "squircle" card */
+.clm-card{
+  align-items:stretch;
+  justify-content:space-between;
+  gap:18px;
+  text-align:left;
+  padding:28px 26px;
+  border-radius:20px;
+  border:1px solid rgba(76,196,106,.22);
+  background:
+    radial-gradient(130% 90% at 100% 0%, rgba(76,196,106,.18), transparent 55%),
+    linear-gradient(165deg, #16201b 0%, #0d100e 72%);
+  color:#e9eeeb;
+  overflow:hidden;
+  box-shadow:
+    0 30px 60px -26px rgba(0,0,0,.6),
+    0 22px 50px -34px rgba(76,196,106,.55),
+    inset 0 1px 0 rgba(255,255,255,.05);
+}
+/* subtle green corner accent */
+.clm-card::before{
+  content:"";
+  position:absolute;
+  top:0;left:0;
+  width:64px;height:4px;
+  border-radius:0 0 6px 0;
+  background:linear-gradient(90deg,var(--green),transparent);
+}
+.clm-card .cc-rate{margin-top:0;color:#fff;}
+.clm-card .cc-rate .stars .off{color:rgba(255,255,255,.18);}
+.clm-card .cc-q{margin-top:14px;color:#c5cfca;}
+.clm-card .cc-head{margin-top:4px;}
+.clm-card .cc-name{color:#fff;}
+.clm-card .cc-role{color:#86b699;}
+/* profile photo: ringed squircle to match the card */
+.clm-card .cc-av{
+  width:56px;height:56px;
+  border-radius:15px;
+  padding:0;
+  overflow:hidden;
+  box-shadow:0 0 0 2px rgba(76,196,106,.5), 0 10px 20px -8px rgba(0,0,0,.7);
+}
+.clm-card .cc-av img{width:100%;height:100%;object-fit:cover;display:block;}
+/* CTAs live inside the pinned block, just under the cards — margin-top clears the
+   cards' overflow/shadow, z-index keeps them above the stacked (z-indexed) cards */
+.clm-actions{
+  display:flex;justify-content:center;gap:12px;padding:0 22px;flex-wrap:wrap;
+  position:relative;z-index:30;margin-top:88px;
+}
+.clm-actions .btn{padding:14px 24px;font-size:15px;}
+/* primary — brand green, glowing */
+.clm-actions .cl-light{
+  background:linear-gradient(135deg, var(--green-bright), var(--green-deep));
+  color:#062612;
+  border:none;
+  box-shadow:0 14px 30px -10px rgba(76,196,106,.65), inset 0 1px 0 rgba(255,255,255,.35);
+}
+.clm-actions .cl-light:hover{
+  background:linear-gradient(135deg, var(--green), var(--green-deep));
+  transform:translateY(-2px);
+  box-shadow:0 18px 36px -10px rgba(76,196,106,.8), inset 0 1px 0 rgba(255,255,255,.35);
+}
+/* secondary — clean white, lifted off the tint */
+.clm-actions .cl-ghost{
+  background:#fff;
+  color:var(--ink);
+  border:1px solid rgba(20,24,26,.10);
+  box-shadow:0 10px 24px -14px rgba(20,24,26,.45);
+}
+.clm-actions .cl-ghost:hover{
+  border-color:var(--green);
+  color:var(--green-deep);
+  transform:translateY(-2px);
+}
+@media(max-width:560px){
+  .clm-cards{height:356px;}
+  .clm-card{padding:24px 22px;}
+  .clm-card .cc-q{font-size:15px;line-height:1.55;}
 }
 
 /* ===== FOOTER ===== */
@@ -1087,23 +1270,39 @@ footer .logo-img.foot{height:76px;}
   .d-code{font-size:11px;overflow:hidden;}
 }
 
-/* process orbital: shrink the radius/nodes so side nodes don't clip off-screen */
+/* process orbital: shrink the radius/nodes so side nodes don't clip off-screen,
+   and slim the centre card so the orbit nodes stay visible around it */
 @media(max-width:600px){
-  .orbit{height:560px;}
-  .onode{transform:rotate(calc(var(--a) + var(--rot))) translateY(-190px) rotate(calc(-1 * (var(--a) + var(--rot))));}
-  .onode .nbtn{width:54px;height:54px;}
-  .onode .olabel{font-size:11.5px;}
-  .ocard{width:250px;}
+  .orbit{height:520px;}
+  .onode{transform:rotate(calc(var(--a) + var(--rot))) translateY(-198px) rotate(calc(-1 * (var(--a) + var(--rot))));}
+  .onode .nbtn{width:48px;height:48px;}
+  .onode .nbtn svg{width:20px;height:20px;}
+  .onode .olabel{font-size:11px;margin-top:7px;}
+  /* compact card */
+  .ocard{width:228px;padding:16px 16px 18px;border-radius:16px;transform:translate(-50%,-48%);}
+  .oc-badge{font-size:10px;padding:5px 10px;}
+  .oc-date{font-size:11px;}
+  .oc-title{font-size:17px;margin-top:11px;}
+  .oc-desc{font-size:12px;margin-top:6px;line-height:1.45;}
+  .oc-rule{margin:13px 0;}
+  .oc-bar-row{font-size:12px;}
+  .oc-conn-label{font-size:10px;margin-top:14px;}
+  .oc-chips{gap:8px;margin-top:10px;}
+  .oc-chips button{padding:7px 11px;font-size:11px;}
+  .orbit-ring{inset:36px;}
+  .orbit-ring.r2{inset:74px;}
 }
 @media(max-width:400px){
   .orbit{height:480px;}
-  .onode{transform:rotate(calc(var(--a) + var(--rot))) translateY(-150px) rotate(calc(-1 * (var(--a) + var(--rot))));}
-  .onode .nbtn{width:48px;height:48px;}
-  .onode .olabel{font-size:11px;}
-  .ocard{width:220px;padding:18px 18px 20px;}
-  .oc-title{font-size:18px;}
-  .orbit-ring{inset:30px;}
-  .orbit-ring.r2{inset:66px;}
+  .onode{transform:rotate(calc(var(--a) + var(--rot))) translateY(-176px) rotate(calc(-1 * (var(--a) + var(--rot))));}
+  .onode .nbtn{width:44px;height:44px;}
+  .onode .nbtn svg{width:18px;height:18px;}
+  .onode .olabel{font-size:10.5px;}
+  .ocard{width:206px;padding:14px 14px 16px;}
+  .oc-title{font-size:16px;margin-top:9px;}
+  .oc-desc{font-size:11.5px;}
+  .orbit-ring{inset:28px;}
+  .orbit-ring.r2{inset:60px;}
 }
 
 /* clients: comfortable padding once cards are stacked */
@@ -1220,13 +1419,54 @@ footer .logo-img.foot{height:76px;}
 .pm-submit:hover{background:var(--green-bright);transform:translateY(-2px);gap:14px;box-shadow:0 22px 42px -14px rgba(76,196,106,.9);}
 .pm-note{text-align:center;color:var(--faint-d);font-size:13px;margin-top:2px;}
 
-/* success state */
-.pm-success{min-height:420px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
-.pm-success-ic{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:rgba(76,196,106,.14);border:1px solid rgba(76,196,106,.5);color:var(--green-deep);}
-.pm-success h3{font-family:var(--ff-display);font-weight:800;font-size:26px;letter-spacing:-.02em;color:var(--ink);margin-top:22px;}
-.pm-success p{color:var(--body);font-size:15.5px;line-height:1.6;margin-top:12px;max-width:340px;}
-.pm-success b{color:var(--ink);}
-.pm-success .pm-submit{width:auto;margin-top:26px;padding:14px 40px;}
+/* ── submit choreography: letters fall → empty white card → message ── */
+
+/* smooth max-width morph when the card contracts into the message card */
+.pm{transition:max-width .55s cubic-bezier(.2,.7,.3,1);}
+
+/* per-letter exit */
+.pm-ltr{display:inline-block;white-space:pre;}
+.pm-fall .pm-ltr{animation:pm-fall 1.15s cubic-bezier(.45,.05,.55,.18) forwards;}
+@keyframes pm-fall{
+  0%{transform:translate(0,0) rotate(0);opacity:1;}
+  12%{transform:translate(0,-7px) rotate(0);opacity:1;}
+  100%{transform:translate(var(--dx,0),170px) rotate(var(--rot,14deg));opacity:0;}
+}
+
+/* whole-block exit for inputs / button / note (can't split their glyphs) */
+.pm-fall .pm-fall-blk{animation:pm-fall-blk 1.1s cubic-bezier(.45,.05,.55,.18) forwards;}
+@keyframes pm-fall-blk{
+  0%{transform:translateY(0);opacity:1;}
+  12%{transform:translateY(-6px);opacity:1;}
+  100%{transform:translateY(165px);opacity:0;}
+}
+
+/* the dark pitch panel dissolves to white, leaving an empty card */
+.pm-fall .pm-aside{animation:pm-aside-fade .6s ease forwards;pointer-events:none;}
+@keyframes pm-aside-fade{to{opacity:0;}}
+.pm-fall .pm-close{opacity:0;pointer-events:none;transition:opacity .3s;}
+
+/* empty white card: collapse to a single centered column and contract */
+.pm-empty{grid-template-columns:1fr;max-width:540px;}
+
+/* message that rises into the empty card */
+.pm-empty .pm-main{min-height:340px;display:flex;align-items:center;justify-content:center;}
+.pm-final{display:flex;flex-direction:column;align-items:center;text-align:center;padding:20px;}
+.pm-final-ic{width:60px;height:60px;border-radius:50%;display:grid;place-items:center;background:rgba(76,196,106,.14);border:1px solid rgba(76,196,106,.5);color:var(--green-deep);opacity:0;animation:pm-pop .5s .15s cubic-bezier(.2,.8,.3,1.4) forwards;}
+.pm-final-tx{font-family:var(--ff-display);font-weight:800;font-size:clamp(20px,2.4vw,26px);line-height:1.32;letter-spacing:-.02em;color:var(--ink);max-width:380px;margin-top:22px;opacity:0;animation:pm-rise-in .55s .32s cubic-bezier(.2,.7,.3,1) forwards;}
+@keyframes pm-pop{0%{opacity:0;transform:scale(.4);}100%{opacity:1;transform:scale(1);}}
+@keyframes pm-rise-in{0%{opacity:0;transform:translateY(16px);}100%{opacity:1;transform:translateY(0);}}
+
+/* graceful close */
+.pm-closing{animation:pm-overlay-out .3s ease forwards;}
+.pm-closing .pm{animation:pm-card-out .3s ease forwards;}
+@keyframes pm-overlay-out{to{opacity:0;}}
+@keyframes pm-card-out{to{opacity:0;transform:translateY(10px) scale(.985);}}
+
+@media(prefers-reduced-motion:reduce){
+  .pm-fall .pm-ltr,.pm-fall .pm-fall-blk{animation-duration:.35s;}
+  .pm-final-ic,.pm-final-tx{animation-delay:0s;}
+}
 
 @media(max-width:780px){
   .pm-overlay{padding:20px 16px;align-items:flex-start;}
@@ -1236,5 +1476,5 @@ footer .logo-img.foot{height:76px;}
   .pm-main{padding:40px 22px 30px;}
   /* let the grid read a touch stronger now that the dark panel is hidden */
   .pm-main::before{background-image:linear-gradient(rgba(20,24,26,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(20,24,26,.06) 1px,transparent 1px);-webkit-mask-image:radial-gradient(ellipse 120% 55% at 50% 0%,#000,transparent 78%);mask-image:radial-gradient(ellipse 120% 55% at 50% 0%,#000,transparent 78%);}
-  .pm-success{min-height:0;padding:24px 0;}
+  .pm-empty .pm-main{min-height:260px;}
 }

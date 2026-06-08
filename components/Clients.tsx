@@ -4,13 +4,14 @@ import { useEffect, useRef } from "react";
 import { Star } from "lucide-react";
 import { smoothScrollTo } from "./smoothScroll";
 import { openProjectModal } from "./ProjectModal";
+import ClientsStackMobile from "./ClientsStackMobile";
 
-type Testimonial = { n: string; r: string; rate: number; q: string };
+type Testimonial = { n: string; r: string; rate: number; q: string; img?: string };
 
 const T: Testimonial[] = [
-  { n: "Will Smith", r: "Harper Education", rate: 5.0, q: "Collaborating on this project was seamless. The vision was clearly understood, and the designs genuinely reflect my brand identity." },
-  { n: "Ikta Sollork", r: "PARAL · CEO", rate: 4.7, q: "Working with this team was effortless. The vision was understood perfectly, and the designs truly represent my brand." },
-  { n: "Alex Johnson", r: "Innovate Tech", rate: 4.9, q: "A truly transformative partnership. The end result exceeded all of our expectations and set a new standard in our industry." },
+  { n: "Will Smith", r: "Harper Education", rate: 5.0, q: "Collaborating on this project was seamless. The vision was clearly understood, and the designs genuinely reflect my brand identity.", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=70&w=200&h=200&auto=format&fit=crop" },
+  { n: "Ikta Sollork", r: "PARAL · CEO", rate: 4.7, q: "Working with this team was effortless. The vision was understood perfectly, and the designs truly represent my brand.", img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=70&w=200&h=200&auto=format&fit=crop" },
+  { n: "Alex Johnson", r: "Innovate Tech", rate: 4.9, q: "A truly transformative partnership. The end result exceeded all of our expectations and set a new standard in our industry.", img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=70&w=200&h=200&auto=format&fit=crop" },
 ];
 
 const PALETTE = ["#4cc46a", "#34d6c3", "#f6a623", "#7a5af0", "#3aa0d8"];
@@ -70,7 +71,13 @@ export default function Clients() {
 
   return (
     <section className="clients" id="testimonials">
-      <div className="clients-track" id="clientsTrack" ref={trackRef}>
+      {/* Mobile (≤880px): motion-based fan/stack scroll animation */}
+      <div className="clients-mobile">
+        <ClientsStackMobile items={T} palette={PALETTE} />
+      </div>
+
+      {/* Desktop: existing CSS scroll-stack */}
+      <div className="clients-track clients-desktop" id="clientsTrack" ref={trackRef}>
         <div className="clients-sticky">
           <div className="clients-grid">
             <div className="cl-left reveal">

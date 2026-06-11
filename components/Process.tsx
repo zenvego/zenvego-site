@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Search, FileText, Code2, ShieldCheck, Rocket, Zap, Link2, ArrowRight } from "lucide-react";
+import { Search, FileText, Code2, ShieldCheck, Rocket, Zap, Link2, ArrowRight, Pause, Play } from "lucide-react";
+import { useReducedMotion } from "./useReducedMotion";
 
 const NODES = [Search, FileText, Code2, ShieldCheck, Rocket];
+const DWELL_MS = 6000;
 
 type Phase = {
   status: string;
@@ -28,8 +30,12 @@ export default function Process() {
   const [active, setActive] = useState(1);
   const [shown, setShown] = useState(1);
   const [fade, setFade] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const reduced = useReducedMotion();
   const currentRot = useRef(-72);
   const activeRef = useRef(1);
+  const pausedRef = useRef(false);
+  const reducedRef = useRef(false);
   const orbitRef = useRef<HTMLDivElement>(null);
   const timer = useRef<number | null>(null);
 
@@ -51,10 +57,26 @@ export default function Process() {
 
   const resetAuto = () => {
     if (timer.current) clearInterval(timer.current);
+    /* Skip auto-rotation entirely for users who've opted into reduced motion
+       (WCAG 2.2.2). For everyone else, allow pause via the manual toggle and
+       use a dwell long enough to actually read the phase. */
+    if (reducedRef.current || pausedRef.current) return;
     timer.current = window.setInterval(() => {
-      go((activeRef.current + 1) % NODES.length);
-    }, 2000);
+      if (!pausedRef.current) go((activeRef.current + 1) % NODES.length);
+    }, DWELL_MS);
   };
+
+  useEffect(() => {
+    reducedRef.current = reduced;
+    resetAuto();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reduced]);
+
+  useEffect(() => {
+    pausedRef.current = paused;
+    resetAuto();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [paused]);
 
   useEffect(() => {
     orbitRef.current?.style.setProperty("--rot", `${currentRot.current}deg`);
@@ -66,14 +88,26 @@ export default function Process() {
   }, []);
 
   const d = DATA[shown];
+  const autoRotates = !reduced && !paused;
 
   return (
     <section className="block orbit-sec" id="process">
       <div className="wrap">
         <div className="sec-head reveal">
-          <span className="eyebrow" style={{ justifyContent: "center" }}>How we work</span>
           <h2>A clear path from kickoff to launch</h2>
           <p>The process orbits around one shared goal: shipping. Click any phase to bring it into focus.</p>
+          {!reduced && (
+            <button
+              type="button"
+              className="orbit-pause"
+              aria-label={paused ? "Resume auto-advance" : "Pause auto-advance"}
+              aria-pressed={paused}
+              onClick={() => setPaused((p) => !p)}
+            >
+              {paused ? <Play size={13} strokeWidth={2.4} /> : <Pause size={13} strokeWidth={2.4} />}
+              <span>{paused ? "Paused" : "Auto-advancing"}</span>
+            </button>
+          )}
         </div>
         <div className="orbit-wrap reveal">
           <div className="orbit" id="orbit" ref={orbitRef}>

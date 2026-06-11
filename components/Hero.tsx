@@ -15,10 +15,10 @@ export default function Hero() {
       </div>
 
       <div className="wrap hero-copy">
-        <h1>Reimagine how you ship products</h1>
+        <h1>Apps and sites, built like senior product work.</h1>
         <p className="lead">
-          <b>devisine</b> designs &amp; builds beautiful apps and websites for
-          ambitious teams.
+          <b>devisine</b> is a small studio of designers and design engineers.
+          We design and build the product, then hand it over.
         </p>
         <div className="hero-cta">
           <button

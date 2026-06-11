@@ -41,29 +41,59 @@ export default function PhoneMockups() {
       });
     }
 
+    // First paint: drop the whole hand into its fanned positions instantly, with
+    // no entrance transition, so every card is visible immediately instead of
+    // animating in one-by-one after hydration.
+    cards.forEach((c) => (c.style.transition = "none"));
     layout();
+    void deck.offsetWidth; // commit the no-transition transforms before re-enabling
+    cards.forEach((c) => (c.style.transition = ""));
+
     if (reduceMotion) return;
 
-    let timer = window.setInterval(() => {
+    let timer: number | null = null;
+    let onScreen = true;
+
+    function tick() {
       order.unshift(order.pop() as number);
       layout();
-    }, 2000);
+    }
+    function start() {
+      if (timer != null || !onScreen || document.hidden) return;
+      timer = window.setInterval(tick, 2000);
+    }
+    function stop() {
+      if (timer != null) {
+        window.clearInterval(timer);
+        timer = null;
+      }
+    }
 
-    const pause = () => window.clearInterval(timer);
-    const resume = () => {
-      timer = window.setInterval(() => {
-        order.unshift(order.pop() as number);
-        layout();
-      }, 2000);
-    };
+    stage.addEventListener("mouseenter", stop);
+    stage.addEventListener("mouseleave", start);
 
-    stage.addEventListener("mouseenter", pause);
-    stage.addEventListener("mouseleave", resume);
+    const onVisibility = () => (document.hidden ? stop() : start());
+    document.addEventListener("visibilitychange", onVisibility);
+
+    // Only spend frames rotating the deck while the hero is actually on screen.
+    const io = new IntersectionObserver(
+      (entries) => {
+        onScreen = entries[0].isIntersecting;
+        if (onScreen) start();
+        else stop();
+      },
+      { threshold: 0.15 }
+    );
+    io.observe(stage);
+
+    start();
 
     return () => {
-      window.clearInterval(timer);
-      stage.removeEventListener("mouseenter", pause);
-      stage.removeEventListener("mouseleave", resume);
+      stop();
+      stage.removeEventListener("mouseenter", stop);
+      stage.removeEventListener("mouseleave", start);
+      document.removeEventListener("visibilitychange", onVisibility);
+      io.disconnect();
     };
   }, []);
 

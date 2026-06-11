@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import Image from "next/image";
 import {
   Star,
   ArrowRight,
@@ -10,6 +11,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { openProjectModal } from "./ProjectModal";
+import { useReducedMotion } from "./useReducedMotion";
 
 type Stat = { value: string; unit: string; label: string };
 
@@ -157,6 +159,7 @@ const PROJECTS: Project[] = [
 export default function WorkGallery() {
   const galRef = useRef<HTMLDivElement>(null);
   const [openIdx, setOpenIdx] = useState<number | null>(null);
+  const reduced = useReducedMotion();
 
   const close = useCallback(() => setOpenIdx(null), []);
   const prev = useCallback(
@@ -208,10 +211,11 @@ export default function WorkGallery() {
     }
     function resetAuto() {
       if (timer) clearInterval(timer);
-      if (hovering) return;
+      /* WCAG 2.2.2: skip auto-advance for users who prefer reduced motion. */
+      if (hovering || reduced) return;
       timer = window.setInterval(() => {
         if (!hovering) setActive((active + 1) % N);
-      }, 4200);
+      }, 6000);
     }
     panels.forEach((p, idx) => {
       p.addEventListener("mouseenter", () => {
@@ -235,7 +239,7 @@ export default function WorkGallery() {
     return () => {
       if (timer) clearInterval(timer);
     };
-  }, []);
+  }, [reduced]);
 
   return (
     <section className="block cream" id="work">
@@ -259,15 +263,33 @@ export default function WorkGallery() {
                 (p.mediaKind === "screens" ? (
                   <div className="wscreens" aria-hidden>
                     {p.images.map((src, idx) => (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img className="wscreen" src={src} alt="" key={idx} />
+                      <Image
+                        className="wscreen"
+                        src={src}
+                        alt=""
+                        width={928}
+                        height={494}
+                        sizes="(max-width: 880px) 82vw, 464px"
+                        priority={i === 0 && idx === 0}
+                        loading={i === 0 && idx === 0 ? "eager" : "lazy"}
+                        key={idx}
+                      />
                     ))}
                   </div>
                 ) : (
                   <div className="wphones" aria-hidden>
                     {p.images.map((src, idx) => (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img className="wphone" src={src} alt="" key={idx} />
+                      <Image
+                        className="wphone"
+                        src={src}
+                        alt=""
+                        width={364}
+                        height={632}
+                        sizes="(max-width: 880px) 34vw, 182px"
+                        priority={i === 0 && idx === 0}
+                        loading={i === 0 && idx === 0 ? "eager" : "lazy"}
+                        key={idx}
+                      />
                     ))}
                   </div>
                 ))}

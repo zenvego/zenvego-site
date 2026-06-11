@@ -1,0 +1,309 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-09T00:00:00Z",
+  "title": "Design System: devisine",
+  "extensions": {
+    "colorMeta": {
+      "green": {
+        "role": "primary",
+        "displayName": "devisine Green",
+        "canonical": "oklch(0.745 0.176 148)",
+        "tonalRamp": [
+          "oklch(0.18 0.06 148)",
+          "oklch(0.28 0.09 148)",
+          "oklch(0.38 0.12 148)",
+          "oklch(0.48 0.15 148)",
+          "oklch(0.60 0.17 148)",
+          "oklch(0.74 0.18 148)",
+          "oklch(0.85 0.13 148)",
+          "oklch(0.95 0.06 148)"
+        ]
+      },
+      "green-deep": {
+        "role": "primary",
+        "displayName": "Deep Green",
+        "canonical": "oklch(0.585 0.166 148)",
+        "tonalRamp": [
+          "oklch(0.15 0.06 148)",
+          "oklch(0.25 0.09 148)",
+          "oklch(0.35 0.12 148)",
+          "oklch(0.45 0.15 148)",
+          "oklch(0.58 0.17 148)",
+          "oklch(0.72 0.16 148)",
+          "oklch(0.84 0.11 148)",
+          "oklch(0.94 0.05 148)"
+        ]
+      },
+      "green-bright": {
+        "role": "primary",
+        "displayName": "Bright Green",
+        "canonical": "oklch(0.82 0.16 148)",
+        "tonalRamp": [
+          "oklch(0.22 0.07 148)",
+          "oklch(0.34 0.10 148)",
+          "oklch(0.46 0.13 148)",
+          "oklch(0.58 0.16 148)",
+          "oklch(0.70 0.17 148)",
+          "oklch(0.82 0.16 148)",
+          "oklch(0.90 0.10 148)",
+          "oklch(0.96 0.04 148)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "oklch(0.215 0.006 200)",
+        "tonalRamp": [
+          "oklch(0.10 0.006 200)",
+          "oklch(0.21 0.006 200)",
+          "oklch(0.32 0.005 200)",
+          "oklch(0.45 0.005 200)",
+          "oklch(0.58 0.005 200)",
+          "oklch(0.72 0.004 200)",
+          "oklch(0.86 0.004 200)",
+          "oklch(0.97 0.003 200)"
+        ]
+      },
+      "dark": {
+        "role": "neutral",
+        "displayName": "Dark Surface",
+        "canonical": "oklch(0.16 0.003 160)",
+        "tonalRamp": [
+          "oklch(0.08 0.003 160)",
+          "oklch(0.16 0.003 160)",
+          "oklch(0.26 0.003 160)",
+          "oklch(0.40 0.003 160)",
+          "oklch(0.55 0.003 160)",
+          "oklch(0.70 0.003 160)",
+          "oklch(0.85 0.003 160)",
+          "oklch(0.97 0.003 160)"
+        ]
+      },
+      "page-bg": {
+        "role": "neutral",
+        "displayName": "Mint Page Wash",
+        "canonical": "oklch(0.952 0.018 150)",
+        "tonalRamp": [
+          "oklch(0.18 0.018 150)",
+          "oklch(0.30 0.018 150)",
+          "oklch(0.45 0.018 150)",
+          "oklch(0.60 0.018 150)",
+          "oklch(0.74 0.018 150)",
+          "oklch(0.85 0.018 150)",
+          "oklch(0.92 0.018 150)",
+          "oklch(0.97 0.012 150)"
+        ]
+      },
+      "cream": {
+        "role": "neutral",
+        "displayName": "Cream",
+        "canonical": "oklch(0.972 0.006 150)",
+        "tonalRamp": [
+          "oklch(0.20 0.006 150)",
+          "oklch(0.32 0.006 150)",
+          "oklch(0.46 0.006 150)",
+          "oklch(0.60 0.006 150)",
+          "oklch(0.74 0.006 150)",
+          "oklch(0.86 0.006 150)",
+          "oklch(0.94 0.006 150)",
+          "oklch(0.98 0.004 150)"
+        ]
+      },
+      "orange": {
+        "role": "tertiary",
+        "displayName": "Illustration Orange",
+        "canonical": "oklch(0.765 0.158 66)",
+        "tonalRamp": [
+          "oklch(0.20 0.07 66)",
+          "oklch(0.32 0.10 66)",
+          "oklch(0.45 0.13 66)",
+          "oklch(0.58 0.15 66)",
+          "oklch(0.68 0.16 66)",
+          "oklch(0.77 0.16 66)",
+          "oklch(0.88 0.10 66)",
+          "oklch(0.96 0.04 66)"
+        ]
+      },
+      "teal": {
+        "role": "tertiary",
+        "displayName": "Illustration Teal",
+        "canonical": "oklch(0.802 0.114 188)",
+        "tonalRamp": [
+          "oklch(0.20 0.06 188)",
+          "oklch(0.32 0.08 188)",
+          "oklch(0.45 0.10 188)",
+          "oklch(0.58 0.11 188)",
+          "oklch(0.70 0.12 188)",
+          "oklch(0.80 0.11 188)",
+          "oklch(0.90 0.08 188)",
+          "oklch(0.97 0.03 188)"
+        ]
+      },
+      "purple": {
+        "role": "tertiary",
+        "displayName": "Illustration Purple",
+        "canonical": "oklch(0.78 0.094 295)",
+        "tonalRamp": [
+          "oklch(0.22 0.07 295)",
+          "oklch(0.34 0.09 295)",
+          "oklch(0.46 0.10 295)",
+          "oklch(0.58 0.10 295)",
+          "oklch(0.68 0.10 295)",
+          "oklch(0.78 0.09 295)",
+          "oklch(0.88 0.06 295)",
+          "oklch(0.96 0.02 295)"
+        ]
+      },
+      "blue": {
+        "role": "tertiary",
+        "displayName": "Illustration Blue",
+        "canonical": "oklch(0.84 0.088 233)",
+        "tonalRamp": [
+          "oklch(0.20 0.06 233)",
+          "oklch(0.34 0.08 233)",
+          "oklch(0.46 0.10 233)",
+          "oklch(0.58 0.10 233)",
+          "oklch(0.72 0.09 233)",
+          "oklch(0.84 0.09 233)",
+          "oklch(0.92 0.06 233)",
+          "oklch(0.97 0.02 233)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display (Sora)", "purpose": "Section h2s. Sora 700-800 with -0.02em to -0.03em tracking. The studio's hard structural voice." },
+      "hero": { "displayName": "Hero (Sora 800)", "purpose": "The h1 in the dark hero band. Maximum scale. white-space nowrap at desktop." },
+      "title": { "displayName": "Title (Sora 700)", "purpose": "Card titles, panel headings, modal titles." },
+      "body": { "displayName": "Body (Manrope)", "purpose": "Hero lead, section intros, primary reading copy. line-height 1.6." },
+      "body-small": { "displayName": "Body Small (Manrope)", "purpose": "Card body copy, panel descriptions. 13.5-14px." },
+      "eyebrow": { "displayName": "Eyebrow (Sora uppercase)", "purpose": "The signature named kicker. 13px, 0.04em tracking, green-deep, with 20x2px green bar prefix. Once or twice per page." },
+      "caption": { "displayName": "Caption (Manrope)", "purpose": "Rating helper text, floating-badge subline, metadata. 11-12.5px, faint color." }
+    },
+    "shadows": [
+      { "name": "card-resting", "value": "0 24px 50px -24px rgba(20,24,26,0.22)", "purpose": "Default card lift on hover on the mint surface." },
+      { "name": "card-high-lift", "value": "0 44px 96px -38px rgba(20,24,26,0.6)", "purpose": "Expanded work-gallery panel; the promoted-dominant card." },
+      { "name": "phone-deep", "value": "0 40px 84px -22px rgba(0,0,0,0.55), 0 10px 26px -10px rgba(0,0,0,0.32)", "purpose": "Hero phone mockups against the dark surface; two-layer for legibility." },
+      { "name": "floating-badge", "value": "0 22px 46px -18px rgba(0,0,0,0.45)", "purpose": "Hero floating badges, registering against the dark band." },
+      { "name": "green-bloom", "value": "0 10px 26px -10px #4cc46a", "purpose": "Primary CTA signature glow; shadow inherits the button color." },
+      { "name": "green-bloom-hover", "value": "0 16px 34px -10px #4cc46a", "purpose": "Primary CTA on hover." },
+      { "name": "studio-card", "value": "0 30px 70px -40px rgba(20,24,26,0.35)", "purpose": "Stat grid lift on the mint surface." }
+    ],
+    "motion": [
+      { "name": "ease-lift", "value": "cubic-bezier(0.2, 0.7, 0.3, 1)", "purpose": "Primary lift transitions: buttons, cards, hover blooms. 250-400ms." },
+      { "name": "ease-layout", "value": "cubic-bezier(0.4, 0.05, 0.2, 1)", "purpose": "Large layout transitions: work-gallery flex expansion, orbital node rotation. 600-700ms." },
+      { "name": "ease-counter", "value": "ease-out-cubic", "purpose": "Stat counter count-up over 1700ms. Implemented in JS via easeOut(t) = 1 - (1-t)^3." },
+      { "name": "floaty", "value": "5s ease-in-out infinite", "purpose": "Hero floating badge vertical bob. Each badge has a distinct delay (0.2s, 1.1s, 0.6s) so they bob independently." }
+    ],
+    "breakpoints": [
+      { "name": "mobile", "value": "640px" },
+      { "name": "tablet", "value": "880px" },
+      { "name": "desktop", "value": "1000px" },
+      { "name": "wide", "value": "1180px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The signature green CTA. Pill shape, green bloom shadow, lift on hover.",
+      "html": "<button class=\"ds-btn-primary\">Get started today <span aria-hidden=\"true\">&rarr;</span></button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 9px; font-family: Manrope, system-ui, sans-serif; font-weight: 700; font-size: 15px; line-height: 1; padding: 13px 26px; background: #4cc46a; color: #06210f; border: 1px solid transparent; border-radius: 999px; box-shadow: 0 10px 26px -10px #4cc46a; cursor: pointer; transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.3, 1), background 0.25s, box-shadow 0.25s; } .ds-btn-primary:hover { background: #6bdd86; transform: translateY(-2px); box-shadow: 0 16px 34px -10px #4cc46a; } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 10px 26px -10px #4cc46a, 0 0 0 4px rgba(76,196,106,0.35); }"
+    },
+    {
+      "name": "Dark Button",
+      "kind": "button",
+      "refersTo": "button-dark",
+      "description": "The secondary ink button. Used where the green would compete with a green surface.",
+      "html": "<button class=\"ds-btn-dark\">Read the case study</button>",
+      "css": ".ds-btn-dark { display: inline-flex; align-items: center; gap: 9px; font-family: Manrope, system-ui, sans-serif; font-weight: 700; font-size: 15px; line-height: 1; padding: 13px 26px; background: #14181a; color: #ffffff; border: 1px solid transparent; border-radius: 999px; cursor: pointer; transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.3, 1), background 0.25s; } .ds-btn-dark:hover { background: #000000; transform: translateY(-2px); } .ds-btn-dark:focus-visible { outline: none; box-shadow: 0 0 0 4px rgba(20,24,26,0.25); }"
+    },
+    {
+      "name": "Eyebrow Label",
+      "kind": "custom",
+      "refersTo": "eyebrow-label",
+      "description": "The signature named kicker. Used once or twice per page, never as section grammar.",
+      "html": "<span class=\"ds-eyebrow\">The Studio</span>",
+      "css": ".ds-eyebrow { display: inline-flex; align-items: center; gap: 9px; font-family: Sora, system-ui, sans-serif; font-weight: 700; font-size: 13px; line-height: 1; letter-spacing: 0.04em; color: #2c9a4c; text-transform: uppercase; } .ds-eyebrow::before { content: ''; width: 20px; height: 2px; background: #4cc46a; border-radius: 2px; }"
+    },
+    {
+      "name": "Feature Card",
+      "kind": "card",
+      "refersTo": "card-surface",
+      "description": "White card on the mint surface. Lift on hover; border fades to transparent.",
+      "html": "<article class=\"ds-card\"><div class=\"ds-card-tile\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 4h16v16H4z\"/><path d=\"M4 10h16\"/><path d=\"M10 4v16\"/></svg></div><h3 class=\"ds-card-title\">Product Design</h3><p class=\"ds-card-body\">Research-led UX and pixel-perfect UI that make complex products feel effortless. We design systems, not just screens.</p></article>",
+      "css": ".ds-card { background: #ffffff; border: 1px solid #e9ede9; border-radius: 18px; padding: 26px 24px; transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.3, 1), box-shadow 0.3s, border-color 0.3s; } .ds-card:hover { transform: translateY(-6px); box-shadow: 0 24px 50px -24px rgba(20,24,26,0.22); border-color: transparent; } .ds-card-tile { width: 48px; height: 48px; border-radius: 13px; display: grid; place-items: center; margin-bottom: 18px; background: #c8b6f6; color: #5b3fa8; } .ds-card-title { font-family: Sora, system-ui, sans-serif; font-weight: 700; font-size: 18px; line-height: 1.2; letter-spacing: -0.01em; color: #14181a; margin: 0 0 8px 0; } .ds-card-body { font-family: Manrope, system-ui, sans-serif; font-size: 13.5px; line-height: 1.6; color: #5d666b; margin: 0; }"
+    },
+    {
+      "name": "Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Cream-on-white pill label. Used in the service-explorer chips and the work-gallery tags (which use a transparent variant on dark).",
+      "html": "<span class=\"ds-chip\">Design systems</span>",
+      "css": ".ds-chip { display: inline-flex; align-items: center; font-family: Manrope, system-ui, sans-serif; font-weight: 600; font-size: 11.5px; line-height: 1; color: #14181a; background: #f5f8f5; border: 1px solid #e9ede9; border-radius: 999px; padding: 6px 12px; }"
+    },
+    {
+      "name": "Nav Link",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Dark-band nav link. Muted at rest, white when active or hovered.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#services\" class=\"ds-nav-link ds-nav-link--active\">Services</a><a href=\"#work\" class=\"ds-nav-link\">Work</a><a href=\"#process\" class=\"ds-nav-link\">Process</a></nav>",
+      "css": ".ds-nav { display: flex; gap: 34px; background: #0c0e0d; padding: 16px 24px; border-radius: 12px; } .ds-nav-link { font-family: Manrope, system-ui, sans-serif; font-size: 15px; font-weight: 600; color: #aeb4af; text-decoration: none; transition: color 0.2s; } .ds-nav-link:hover, .ds-nav-link--active { color: #ffffff; } .ds-nav-link:focus-visible { outline: none; color: #ffffff; box-shadow: 0 2px 0 #4cc46a; }"
+    },
+    {
+      "name": "Dark Stage Tag",
+      "kind": "custom",
+      "refersTo": "service-stage-tag",
+      "description": "The pill-shaped tag inside the dark service stage. Used to label the active service.",
+      "html": "<span class=\"ds-stage-tag\"><span class=\"ds-stage-tag-dot\"></span> Live preview</span>",
+      "css": ".ds-stage-tag { display: inline-flex; align-items: center; gap: 8px; font-family: Sora, system-ui, sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #ffffff; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); border-radius: 999px; padding: 6px 13px; } .ds-stage-tag-dot { width: 7px; height: 7px; border-radius: 50%; background: #4cc46a; box-shadow: 0 0 8px #4cc46a; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Senior Studio Floor",
+    "overview": "devisine reads like walking into a real working studio: confident on the surface, busy underneath, quiet over the top. The page does not pose for the camera. There's no stage set, no lobby art, no marketing veneer; what's pinned to the wall is the actual work, and what's said is what the studio actually does. A founder closing the tab should think 'those people know what they're doing,' not 'wow, what a site.'\n\nThe system is anchored by two surfaces and one voice. A near-black dark band carries the nav, hero, and footer. A mint wash with a faint emerald 48px grid carries everything else, unbroken across section seams. The brand speaks in mint and green; the other accents are reserved for illustration and never carry primary UI.\n\nThis system explicitly rejects the generic agency template, the overdesigned portfolio, the crypto/AI hype aesthetic, and the stuffy corporate consultancy.",
+    "keyCharacteristics": [
+      "One color voice: green. Other hues are illustration only, never primary UI.",
+      "Two structural surfaces: dark band (nav + hero + footer) and mint page wash everywhere else.",
+      "Type does most of the work. Sora at 800 with -0.03em tracking carries hero hierarchy; the body holds at Manrope 400.",
+      "Motion is tactile, not decorative: lift-on-hover, conic light sweeps, fanned phone floats. Every animation has a prefers-reduced-motion alternative.",
+      "A faint emerald 48px grid runs the full page so section seams never crack the surface.",
+      "Eyebrows are a deliberate, named brand pattern: not section grammar, not on every block."
+    ],
+    "rules": [
+      { "name": "The One Voice Rule", "body": "Green is the only brand color. Mint, cream, ink, white, and the dark band are structural; green is the only color that carries identity. The four illustration accents (orange/teal/purple/blue/pink) are reserved for per-service distinction and decorative imagery. They are never used for primary buttons, primary links, hover states, or text-as-emphasis.", "section": "colors" },
+      { "name": "The Two-Surface Rule", "body": "Every section sits on one of exactly two backgrounds: the dark brand surface (#0c0e0d) or the mint page wash (#e9f3ec). Cards on top of the mint wash use white; cards on top of the dark surface use rgba(255,255,255,0.06). New surfaces don't introduce new background hues.", "section": "colors" },
+      { "name": "The Ink-on-Green Rule", "body": "Any green surface that holds text uses #06210f for the text, not white. White on #4cc46a measures only 2.7:1 (fails AA); #06210f clears 7.4:1.", "section": "colors" },
+      { "name": "The Type-First Rule", "body": "Hierarchy is carried by type, not by color or decoration. A heading is bigger and a different family from body copy; a label is uppercase and tracked; a caption is smaller and faint. Color is for surfaces; weight and size are for hierarchy.", "section": "typography" },
+      { "name": "The -0.03em Floor", "body": "Hero and display headings track at -0.02em to -0.03em. Never tighter than -0.04em (letters touch). The Sora 800 weight at large sizes carries the design; loosen tracking and the headline reads as a default browser h1.", "section": "typography" },
+      { "name": "The Named-Eyebrow Rule", "body": "The eyebrow is part of the brand voice; it's named (The Studio, Our Work, How we work). It is NOT scaffolding above every section. Use it once or twice per page, where the label itself is a brand artifact. Never use 01 / 02 / 03 numbered eyebrows; numbers only earn their place inside a real sequence.", "section": "typography" },
+      { "name": "The Direction-Down Rule", "body": "All resting shadows offset downward only. No 0 -... ambient glows on cards. Light comes from above; the studio shouldn't feel like a stage.", "section": "elevation" },
+      { "name": "The Color-Inherit Rule", "body": "When a CTA is colored (the green button, the bottom-row wmetric pill on work cards), the shadow inherits the surface color at low opacity. The lift reads as light spilling from the button itself, not as a separate effect bolted on.", "section": "elevation" },
+      { "name": "The Hover-Lifts-2px Rule", "body": "Cards translate up exactly 6px on hover; buttons translate 2-3px. Larger displacements break the surface metaphor.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep green as the only voice. Buttons, links, active states, hover blooms, eyebrow labels: green or its ramp. Orange/teal/purple/blue/pink are illustration only.",
+      "Do sit every section on one of two surfaces: the dark band (#0c0e0d) or the mint page wash (#e9f3ec). White cards lift off the mint wash; tonal-overlay cards lift off the dark band.",
+      "Do use #06210f for text on any green surface. White on green here measures 2.7:1 and fails contrast.",
+      "Do carry the 48px emerald grid through every light section. Section seams don't crack; the grid runs unbroken from the announcement bar to the footer.",
+      "Do use text-wrap: balance on h1-h3 and verify the hero copy fits at the mobile breakpoint.",
+      "Do give every animation a prefers-reduced-motion: reduce alternative.",
+      "Do use the eyebrow as a named brand artifact ('The Studio', 'Our Work', 'How we work'). One or two per page.",
+      "Do ship at least one concrete proof per section: a real screenshot, a number, a named project."
+    ],
+    "donts": [
+      "Don't introduce a new brand color. The system speaks in green. New accents are not a design solution; they're a reflex.",
+      "Don't apply the eyebrow above every section. The kicker-eyebrow on every block is the saturated AI scaffolding pattern.",
+      "Don't apply 01 / 02 / 03 numbered eyebrows. Numbers only earn their place inside a real ordered sequence.",
+      "Don't use white text on green. Use #06210f.",
+      "Don't use --body (#5d666b) on a dark background, or --faint-d (#8a938d) for body copy on any surface.",
+      "Don't use side-stripe borders as a default callout pattern.",
+      "Don't use glassmorphism / backdrop-blur as decoration.",
+      "Don't use gradient text (background-clip: text with a gradient background).",
+      "Don't ship the generic agency template (big stock hero video, row of stock client logos, identical icon-heading-paragraph card trio).",
+      "Don't ship the overdesigned-portfolio cliche (cursor effects, WebGL backgrounds, scroll-juggle for its own sake).",
+      "Don't ship the crypto/AI hype aesthetic (gradient-on-gradient, glow text, dark-mode-as-vibe).",
+      "Don't drop below 4.5:1 for body text."
+    ]
+  }
+}

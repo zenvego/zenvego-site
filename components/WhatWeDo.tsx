@@ -12,11 +12,12 @@ import {
   Zap,
 } from "lucide-react";
 import { smoothScrollTo } from "./smoothScroll";
+import { useReducedMotion } from "./useReducedMotion";
 
 type Service = {
   accent: string;
   dwell: number;
-  sk: string;
+  kicker: string;
   title: string;
   Icon: typeof LayoutTemplate;
   tileBg: string;
@@ -27,58 +28,58 @@ type Service = {
 
 const SERVICES: Service[] = [
   {
-    accent: "#7a5af0",
+    accent: "var(--purple)",
     dwell: 6000,
-    sk: "01 · Design",
+    kicker: "Design",
     title: "Product Design",
     Icon: LayoutTemplate,
     tileBg: "var(--purple)",
-    tileColor: "#5b3fa8",
-    body: "Research-led UX and pixel-perfect UI that make complex products feel effortless. We design systems, not just screens.",
+    tileColor: "var(--purple-ink)",
+    body: "Research-led UX and pixel-perfect UI for complex products. We design systems and ship the components alongside them.",
     chips: ["UX research", "Wireframes", "Design systems", "Prototyping"],
   },
   {
-    accent: "#4cc46a",
+    accent: "var(--green)",
     dwell: 6000,
-    sk: "02 · Build",
+    kicker: "Build",
     title: "Web Development",
     Icon: Code2,
     tileBg: "var(--green)",
-    tileColor: "#06210f",
-    body: "Fast, accessible and scalable websites and web apps built on a modern React stack — clean, documented, yours to keep.",
+    tileColor: "var(--green-ink)",
+    body: "Type-safe, accessible React and Next.js apps you can read. Clean code, documented, yours to keep.",
     chips: ["React & Next.js", "Headless CMS", "APIs", "Performance"],
   },
   {
-    accent: "#f6a623",
+    accent: "var(--orange)",
     dwell: 6000,
-    sk: "03 · Ship",
+    kicker: "Ship",
     title: "Mobile Apps",
     Icon: Smartphone,
     tileBg: "var(--orange)",
-    tileColor: "#5a3500",
-    body: "Native-feeling iOS & Android apps that delight users and convert — from prototype to App Store launch.",
-    chips: ["React Native", "Offline-first", "Push & auth", "Store launch"],
+    tileColor: "var(--orange-ink)",
+    body: "iOS and Android apps in React Native that ship at native frame rates, from prototype to App Store launch.",
+    chips: ["React Native", "Offline-first", "Push & auth", "seriously good UX"],
   },
   {
-    accent: "#3aa0d8",
+    accent: "var(--blue)",
     dwell: 6000,
-    sk: "04 · Grow",
+    kicker: "Grow",
     title: "Brand & Strategy",
     Icon: Compass,
     tileBg: "var(--blue)",
-    tileColor: "#1d6c92",
-    body: "Positioning, identity and design systems that scale with your product and keep every touchpoint coherent.",
+    tileColor: "var(--blue-ink)",
+    body: "Positioning, identity and a system that keeps every touchpoint coherent as the team grows.",
     chips: ["Positioning", "Identity", "Messaging", "Guidelines"],
   },
   {
-    accent: "#34d6c3",
+    accent: "var(--teal)",
     dwell: 6000,
-    sk: "05 · Intelligence",
+    kicker: "Intelligence",
     title: "AI Integration",
     Icon: Cpu,
     tileBg: "#bdeee7",
-    tileColor: "#0e6f63",
-    body: "Embed LLMs, copilots and smart automation into your product — from chat assistants to AI search and content generation, built responsibly.",
+    tileColor: "var(--teal-ink)",
+    body: "LLMs, copilots and automation wired into your product. Chat, search, content generation, all evaluated.",
     chips: ["LLM & RAG", "Copilots", "Smart search", "Automation"],
   },
 ];
@@ -222,6 +223,7 @@ function Pane({ index }: { index: number }) {
 export default function WhatWeDo() {
   const wwdRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+  const reduced = useReducedMotion();
 
   useEffect(() => {
     const wwd = wwdRef.current;
@@ -287,8 +289,8 @@ export default function WhatWeDo() {
     }
     function resetAuto() {
       if (timer) clearInterval(timer);
-      // mobile is scroll-driven — no auto-rotation there
-      if (hovering || mq.matches) return;
+      // mobile is scroll-driven; reduced-motion users get no auto-rotation (WCAG 2.2.2)
+      if (hovering || mq.matches || reduced) return;
       timer = window.setInterval(() => {
         if (!hovering && !mq.matches) next();
       }, DWELL);
@@ -318,26 +320,12 @@ export default function WhatWeDo() {
         resetAuto();
       }
     }
-    // Mobile: the active card follows scroll — we open the dashboard of whichever
-    // card has scrolled up to a line near the top of the viewport. We DON'T move
-    // the page (no scrollBy); the dashboard just opens where the card already is.
-    // Choosing by header top (which doesn't move when its own dashboard opens
-    // below it) keeps the pick monotonic, so neighbours can't flicker/fight.
-    let sraf = 0;
+    // Mobile: tap-to-open accordion. The first card is open by default and only
+    // one is open at a time; tapping a card opens it (handled by the row click
+    // listener above). Scrolling never changes which card is open — onScroll only
+    // arms the initial state when the section enters the viewport.
     function onScroll() {
       maybeStart();
-      if (!mq.matches) return;
-      if (sraf) return;
-      sraf = requestAnimationFrame(() => {
-        sraf = 0;
-        const line = (window.innerHeight || 800) * 0.32;
-        let idx = 0;
-        for (let k = 0; k < rows.length; k++) {
-          if (rows[k].getBoundingClientRect().top <= line) idx = k;
-          else break;
-        }
-        if (idx !== cur) select(idx, false);
-      });
     }
     maybeStart();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -346,26 +334,24 @@ export default function WhatWeDo() {
 
     return () => {
       if (timer) clearInterval(timer);
-      if (sraf) cancelAnimationFrame(sraf);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
       window.clearTimeout(t);
     };
-  }, []);
+  }, [reduced]);
 
   return (
     <section className="block" id="services">
       <div className="wrap">
         <div className="wwd-head reveal">
           <div>
-            <span className="eyebrow">What we do</span>
-            <h2 style={{ marginTop: 14 }}>
-              Everything to design &amp; build{" "}
-              <span className="grnk">products people love</span>
+            <h2>
+              Everything we make,{" "}
+              <span className="grnk">across design and engineering</span>
             </h2>
             <p>
-              Strategy, design and engineering under one roof. Explore the five
-              ways we help teams ship — hover or tap to dive in.
+              Strategy, design and engineering under one roof. Pick a discipline
+              to see how the work shows up in production.
             </p>
           </div>
         </div>
@@ -386,7 +372,7 @@ export default function WhatWeDo() {
                       <Icon size={22} strokeWidth={2} />
                     </div>
                     <div className="stitle">
-                      <div className="sk">{s.sk}</div>
+                      <div className="sk">{s.kicker}</div>
                       <h3>{s.title}</h3>
                     </div>
                     <div className="chev"><ChevronRight size={15} strokeWidth={2.4} /></div>
@@ -416,7 +402,7 @@ export default function WhatWeDo() {
             })}
           </div>
 
-          <div className="wwd-stage reveal" id="wwdStage" ref={stageRef} style={{ ["--accent-c" as string]: "#7a5af0" }}>
+          <div className="wwd-stage reveal" id="wwdStage" ref={stageRef} style={{ ["--accent-c" as string]: "var(--purple)" }}>
             <div className="sgrid" />
             <div className="sglow" />
             {SERVICES.map((_, i) => (

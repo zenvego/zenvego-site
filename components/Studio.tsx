@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useReducedMotion } from "./useReducedMotion";
 
 type Stat = {
   /** numeric target the counter animates up to */
@@ -10,50 +11,62 @@ type Stat = {
   label: string;
 };
 
+/* Replace these with real numbers as the studio publishes them. */
 const STATS: Stat[] = [
-  { value: 2015, label: "Founded" },
-  { value: 14, label: "Senior makers" },
-  { value: 9, label: "Timezones" },
-  { value: 100, suffix: "%", label: "In-house build" },
+  { value: 8, suffix: " yrs", label: "Building product studios" },
+  { value: 60, suffix: "+", label: "Apps and sites shipped" },
+  { value: 5, suffix: " wks", label: "Average kickoff to first user" },
+  { value: 70, suffix: "%", label: "Work from returning or referred clients" },
 ];
 
 const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
 
+/* Choreography timing (kept in sync with .studio-fired keyframes in globals.css).
+   Cells finish settling around 860ms after the section is armed; counting up
+   starts a touch before that so the numbers feel like they were already mid-flight
+   when the last cell lands. */
+const COUNT_UP_DELAY_MS = 580;
+const COUNT_UP_DURATION_MS = 1100;
+const SWEEP_DELAY_MS = 820;
+
 export default function Studio() {
+  const wrapRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
   const [counts, setCounts] = useState<number[]>(() => STATS.map(() => 0));
   const started = useRef(false);
+  const reduced = useReducedMotion();
 
-  // Count up + kick off the border-light sweep the first time the grid
-  // scrolls into view.
   useEffect(() => {
-    const el = gridRef.current;
-    if (!el) return;
+    const wrap = wrapRef.current;
+    const grid = gridRef.current;
+    if (!wrap || !grid) return;
 
     const run = () => {
       if (started.current) return;
       started.current = true;
 
-      // travelling-light border sweep (one pass, then it fades out)
-      el.classList.add("run");
+      // Arm the entrance keyframes (heading, body, cells).
+      wrap.classList.add("studio-fired");
 
-      const reduce = window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
-      ).matches;
-      if (reduce) {
+      if (reduced) {
+        // Reduced motion: numbers land instantly; no sweep.
         setCounts(STATS.map((s) => s.value));
         return;
       }
 
-      const duration = 1700;
-      const start = performance.now();
+      // Count-up starts just before the cells settle so the numbers feel "live"
+      // as the last cell lands.
+      const startCount = performance.now() + COUNT_UP_DELAY_MS;
       const tick = (now: number) => {
-        const p = Math.min(1, (now - start) / duration);
+        const p = Math.min(1, Math.max(0, (now - startCount) / COUNT_UP_DURATION_MS));
         const e = easeOut(p);
         setCounts(STATS.map((s) => Math.round(s.value * e)));
         if (p < 1) requestAnimationFrame(tick);
       };
       requestAnimationFrame(tick);
+
+      // Conic-light border sweep follows the cells; long enough to read.
+      window.setTimeout(() => grid.classList.add("run"), SWEEP_DELAY_MS);
     };
 
     const io = new IntersectionObserver(
@@ -65,39 +78,47 @@ export default function Studio() {
           }
         });
       },
-      { threshold: 0.35 }
+      { threshold: 0.25 }
     );
-    io.observe(el);
+    io.observe(wrap);
     return () => io.disconnect();
-  }, []);
+  }, [reduced]);
 
   return (
     <section className="block studio-sec" id="studio">
       <div className="wrap">
-        <div className="studio-grid-wrap">
+        <div className="studio-grid-wrap" ref={wrapRef}>
           {/* left — copy */}
-          <div className="studio-copy reveal">
+          <div className="studio-copy">
             <span className="eyebrow studio-eyebrow">The Studio</span>
             <h2 className="studio-title">
-              A small, senior team that designs like artists and ships like{" "}
-              <span className="grnk">engineers.</span>
+              <span className="studio-line studio-line--a">
+                Senior designers and engineers,
+              </span>{" "}
+              <span className="studio-line studio-line--b grnk">
+                no middle layer.
+              </span>
             </h2>
             <p className="studio-lead">
-              We&apos;re a distributed crew of designers and design engineers
-              who&apos;d rather do a few things impossibly well than everything
-              just okay. No middle layers, no handoff black holes — the people
-              you meet are the people who build it.
+              A distributed crew of designers and design engineers. The people
+              you meet on the intro call are the people who build it. No
+              account managers, no offshore handoff, no pitch deck dressed up
+              as a process.
             </p>
           </div>
 
           {/* right — animated stat grid */}
           <div
-            className="studio-grid reveal"
+            className="studio-grid"
             ref={gridRef}
             onAnimationEnd={() => gridRef.current?.classList.remove("run")}
           >
             {STATS.map((s, i) => (
-              <div className="studio-cell" key={s.label}>
+              <div
+                className="studio-cell"
+                style={{ ["--i" as string]: i } as React.CSSProperties}
+                key={s.label}
+              >
                 <span className="studio-num">
                   {counts[i]}
                   {s.suffix}

@@ -1277,8 +1277,11 @@ section.block{padding:96px 0;position:relative;}
 }
 
 @media(max-width:520px){
-  .studio-grid{grid-template-columns:1fr;}
-  .studio-cell{min-height:0;padding:30px 28px;}
+  /* keep a tight 2×2 grid: two cells per row, two rows */
+  .studio-grid{grid-template-columns:1fr 1fr;border-radius:18px;}
+  .studio-cell{min-height:0;padding:20px 16px 18px;justify-content:flex-start;gap:10px;}
+  .studio-num{font-size:clamp(28px,8.5vw,36px);}
+  .studio-lbl{font-size:12px;line-height:1.35;margin-top:0;}
 }
 @media(prefers-reduced-motion:reduce){
   .studio-grid.run::before,.studio-grid:hover::before{animation:none;}
@@ -1383,15 +1386,15 @@ section.block{padding:96px 0;position:relative;}
 .clm-head .cl-pill{margin:0 auto;}
 .clm-head h2{font-family:var(--ff-display);font-weight:800;font-size:clamp(32px,8vw,44px);letter-spacing:-.03em;line-height:1.04;margin-top:16px;color:var(--ink);}
 .clm-head .cl-sub{color:var(--body);font-size:15.5px;margin:10px auto 0;max-width:360px;}
-.clm-cards{width:min(88vw,360px);height:380px;margin:0;}
+.clm-cards{width:min(84vw,320px);height:256px;margin:0;}
 /* override the component's centered tailwind defaults — premium dark, green-tinted "squircle" card */
 .clm-card{
   align-items:stretch;
   justify-content:space-between;
-  gap:18px;
+  gap:14px;
   text-align:left;
-  padding:28px 26px;
-  border-radius:20px;
+  padding:20px 20px;
+  border-radius:18px;
   border:1px solid rgba(76,196,106,.22);
   background:
     radial-gradient(130% 90% at 100% 0%, rgba(76,196,106,.18), transparent 55%),
@@ -1414,14 +1417,17 @@ section.block{padding:96px 0;position:relative;}
 }
 .clm-card .cc-rate{margin-top:0;color:#fff;}
 .clm-card .cc-rate .stars .off{color:rgba(255,255,255,.18);}
-.clm-card .cc-q{margin-top:14px;color:#c5cfca;}
-.clm-card .cc-head{margin-top:4px;}
-.clm-card .cc-name{color:#fff;}
-.clm-card .cc-role{color:#86b699;}
+.clm-card .cc-metric{margin-top:0;gap:9px;}
+.clm-card .cc-metric-v{font-size:25px;}
+.clm-card .cc-metric-l{font-size:12.5px;}
+.clm-card .cc-q{margin-top:11px;font-size:14px;line-height:1.5;color:#cdd6d0;}
+.clm-card .cc-head{margin-top:0;gap:12px;}
+.clm-card .cc-name{color:#fff;font-size:17px;}
+.clm-card .cc-role{color:#9ac4ab;font-size:13.5px;}
 /* profile photo: ringed squircle to match the card */
 .clm-card .cc-av{
-  width:56px;height:56px;
-  border-radius:15px;
+  width:46px;height:46px;
+  border-radius:13px;
   padding:0;
   overflow:hidden;
   box-shadow:0 0 0 2px rgba(76,196,106,.5), 0 10px 20px -8px rgba(0,0,0,.7);
@@ -1431,7 +1437,7 @@ section.block{padding:96px 0;position:relative;}
    cards' overflow/shadow, z-index keeps them above the stacked (z-indexed) cards */
 .clm-actions{
   display:flex;justify-content:center;gap:12px;padding:0 22px;flex-wrap:wrap;
-  position:relative;z-index:30;margin-top:88px;
+  position:relative;z-index:30;margin-top:60px;
 }
 .clm-actions .btn{padding:14px 24px;font-size:15px;}
 /* primary — brand green, glowing */
@@ -1459,9 +1465,12 @@ section.block{padding:96px 0;position:relative;}
   transform:translateY(-2px);
 }
 @media(max-width:560px){
-  .clm-cards{height:356px;}
-  .clm-card{padding:24px 22px;}
-  .clm-card .cc-q{font-size:15px;line-height:1.55;}
+  .clm-cards{width:min(86vw,300px);height:246px;}
+  .clm-card{padding:18px 18px;}
+  .clm-card .cc-q{font-size:13.5px;line-height:1.5;}
+  .clm-card .cc-metric-v{font-size:23px;}
+  .clm-head h2{font-size:clamp(28px,7.4vw,38px);}
+  .clm-actions{margin-top:48px;}
 }
 
 /* ===== FOOTER ===== */
@@ -1935,20 +1944,31 @@ footer .logo-img.foot{height:76px;}
   .oc-date{font-size:11px;}
   .oc-title{font-size:16px;margin-top:9px;}
   .oc-desc{font-size:11.5px;margin-top:5px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-  .oc-rule{margin:11px 0;}
+  .oc-rule{margin:8px 0;}
   .oc-bar-row{font-size:12px;}
-  .oc-bar{margin-top:8px;}
-  .oc-conn-label{font-size:10px;margin-top:11px;}
-  .oc-chips{gap:7px;margin-top:9px;flex-wrap:nowrap;}
+  .oc-bar{margin-top:6px;}
+  .oc-conn-label{font-size:10px;margin-top:8px;}
+  .oc-chips{gap:7px;margin-top:7px;flex-wrap:nowrap;}
   .oc-chips button{flex:1;justify-content:center;padding:7px 8px;font-size:10.5px;gap:5px;}
 }
-@media(max-width:400px){
+/* Small phones: the ring radius shrinks below half the card's height, so the
+   card's top/bottom would cover the Design/Release/Testing nodes. Scaling the
+   whole card down (not just its width) keeps it physically inside the ring on
+   every phone down to ~340px. transform-origin stays centred so it doesn't drift. */
+@media(max-width:480px){
   .onode .nbtn{width:44px;height:44px;}
   .onode .nbtn svg{width:19px;height:19px;}
-  .onode .olabel{font-size:10.5px;margin-top:6px;}
-  .ocard{width:min(70%,210px);padding:12px 13px 13px;}
+  .onode .olabel{font-size:11px;margin-top:6px;}
+  .ocard{
+    width:min(64%,210px);
+    padding:12px 13px 13px;
+    transform:translate(-50%,-49%) scale(0.82);
+  }
   .oc-title{font-size:15px;margin-top:8px;}
-  .oc-desc{font-size:11px;}
+  .oc-desc{font-size:11px;margin-top:4px;}
+  .oc-rule{margin:7px 0;}
+  .oc-conn-label{margin-top:7px;}
+  .oc-chips{margin-top:7px;}
 }
 
 /* clients: comfortable padding once cards are stacked */

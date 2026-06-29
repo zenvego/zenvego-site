@@ -356,11 +356,13 @@
   justify-content: center;
 }
 
-/* rating */
+/* rating — absolute so it adds no height to the hero, anchored to the
+   bottom-right beside the centered CTA where there's empty space (clears the
+   wide nowrap lead line that the old top:128px placement collided with). */
 .rating {
   position: absolute;
-  right: 6px;
-  top: 128px;
+  right: 0;
+  bottom: 4px;
   display: inline-flex;
   flex-direction: column;
   align-items: flex-end;
@@ -1490,8 +1492,11 @@ footer .logo-img.foot{height:76px;}
 .news input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(76,196,106,.18);}
 .news button{display:inline-flex;align-items:center;gap:8px;flex:none;background:var(--green);border:none;border-radius:12px;padding:0 16px;height:44px;color:#06210f;font-family:var(--ff-body);font-weight:700;font-size:14px;cursor:pointer;transition:background .2s,transform .2s;}
 .news button:hover{background:var(--green-bright);transform:translateY(-1px);}
+.news button:disabled{opacity:.7;cursor:progress;transform:none;}
 .news .news-btn-label{display:inline;}
 @media(max-width:560px){.news .news-btn-label{display:none;}.news button{padding:0;width:44px;justify-content:center;}}
+.news-done{display:flex;align-items:center;gap:8px;margin-top:14px;color:var(--green-bright);font-size:14px;font-weight:600;}
+.news-done svg{flex:none;}
 /* sr-only utility for visually-hidden but screen-reader-available labels. */
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
 /* .socials kept for future use; not currently rendered. */
@@ -1647,6 +1652,13 @@ footer .logo-img.foot{height:76px;}
   color:#b3261e;
 }
 .cf-error svg{flex:none;}
+.cf-error--send{
+  margin-top:-2px;
+  justify-content:center;
+  text-align:center;
+  flex-wrap:wrap;
+}
+.cf-error--send a{color:inherit;text-decoration:underline;}
 
 .cf-submit{
   width:100%;

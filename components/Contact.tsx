@@ -11,6 +11,7 @@ import {
   Loader2,
   Navigation,
 } from "lucide-react";
+import { sendForm } from "../lib/sendForm";
 
 /**
  * Studio contact details. The address drives both the printed card and the
@@ -35,7 +36,7 @@ const MAP_EMBED = `https://www.google.com/maps?q=${mapQuery}&z=15&output=embed`;
 const MAP_DIRECTIONS = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
 
 type Field = "name" | "email" | "company" | "phone" | "message";
-type Status = "idle" | "sending" | "done";
+type Status = "idle" | "sending" | "done" | "error";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -78,7 +79,7 @@ export default function Contact() {
     return er;
   };
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     const er = validate();
     setErrors(er);
@@ -90,8 +91,17 @@ export default function Contact() {
       return;
     }
     setStatus("sending");
-    // Front-end only: stand in for the POST so the success flow is real.
-    window.setTimeout(() => setStatus("done"), 850);
+    const ok = await sendForm({
+      subject: `New project brief from ${values.name.trim() || "the site"}`,
+      email: values.email,
+      fields: {
+        name: values.name,
+        company: values.company,
+        phone: values.phone,
+        message: values.message || "(no project details provided)",
+      },
+    });
+    setStatus(ok ? "done" : "error");
   };
 
   const reset = () => {
@@ -230,9 +240,18 @@ export default function Contact() {
                     </>
                   )}
                 </button>
-                <p className="cf-note">
-                  We reply within one business day. No spam, ever.
-                </p>
+                {status === "error" ? (
+                  <p className="cf-error cf-error--send" role="alert">
+                    <AlertCircle size={14} strokeWidth={2.4} />
+                    Something went wrong sending your brief. Please try again, or
+                    email us directly at{" "}
+                    <a href={`mailto:${STUDIO.email}`}>{STUDIO.email}</a>.
+                  </p>
+                ) : (
+                  <p className="cf-note">
+                    We reply within one business day. No spam, ever.
+                  </p>
+                )}
               </form>
             )}
           </div>

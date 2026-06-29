@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import { X, Check, ArrowRight } from "lucide-react";
+import { sendForm } from "../lib/sendForm";
 
 /**
  * Fire this from anywhere (nav CTA, hero CTA, case-study CTA) to open the
@@ -114,6 +115,17 @@ export default function ProjectModal() {
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
+    // Deliver to the studio inbox in the background; the fall→message
+    // choreography plays regardless so the UX stays snappy.
+    void sendForm({
+      subject: `New project enquiry from ${name.trim() || "the site"}`,
+      email: email,
+      fields: {
+        name,
+        message: brief || "(no project details provided)",
+        source: "Start a project modal",
+      },
+    });
     setPhase("fall");
   };
 

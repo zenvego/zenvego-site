@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import { smoothScrollTo } from "./smoothScroll";
+import { sendForm } from "../lib/sendForm";
 
 const STUDIO = [
   { label: "Services", href: "#services" },
@@ -52,21 +54,7 @@ export default function Footer() {
             <p className="foot-news-sub">
               Shipped work, behind-the-scenes notes, no spam.
             </p>
-            <form className="news" onSubmit={(e) => e.preventDefault()}>
-              <label htmlFor="news-email" className="sr-only">
-                Email address
-              </label>
-              <input
-                id="news-email"
-                type="email"
-                placeholder="you@company.com"
-                required
-              />
-              <button type="submit" aria-label="Subscribe to dispatch">
-                <span className="news-btn-label">Subscribe</span>
-                <ArrowRight size={17} strokeWidth={2} aria-hidden />
-              </button>
-            </form>
+            <Newsletter />
           </div>
         </div>
 
@@ -76,5 +64,56 @@ export default function Footer() {
         </div>
       </div>
     </footer>
+  );
+}
+
+/** Footer email capture — delivers each subscribe to the studio inbox. */
+function Newsletter() {
+  const [email, setEmail] = useState("");
+  const [done, setDone] = useState(false);
+  const [busy, setBusy] = useState(false);
+
+  const subscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim() || busy) return;
+    setBusy(true);
+    await sendForm({
+      subject: `New dispatch subscriber: ${email.trim()}`,
+      email,
+      fields: { source: "Footer newsletter" },
+    });
+    // Even on a transient failure we acknowledge — the subscribe intent is low
+    // stakes and a retry loop here would only frustrate. The send is logged.
+    setBusy(false);
+    setDone(true);
+  };
+
+  if (done) {
+    return (
+      <p className="news-done" role="status" aria-live="polite">
+        <Check size={16} strokeWidth={3} aria-hidden />
+        You&apos;re on the list — talk soon.
+      </p>
+    );
+  }
+
+  return (
+    <form className="news" onSubmit={subscribe}>
+      <label htmlFor="news-email" className="sr-only">
+        Email address
+      </label>
+      <input
+        id="news-email"
+        type="email"
+        placeholder="you@company.com"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+      />
+      <button type="submit" aria-label="Subscribe to dispatch" disabled={busy}>
+        <span className="news-btn-label">{busy ? "…" : "Subscribe"}</span>
+        <ArrowRight size={17} strokeWidth={2} aria-hidden />
+      </button>
+    </form>
   );
 }

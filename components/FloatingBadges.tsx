@@ -19,7 +19,7 @@ export default function FloatingBadges() {
         </div>
         <div className="fb-tx">
           <div className="fb-t">+5 happy teams</div>
-          <div className="fb-s">since 2018</div>
+          <div className="fb-s">since 2026</div>
         </div>
       </div>
     </>

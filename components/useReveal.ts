@@ -10,6 +10,10 @@ import { useEffect } from "react";
  */
 export function useReveal() {
   useEffect(() => {
+    /* Arm the reveal: content is visible by default in the CSS; we only opt-in
+       to the entrance animation once JS has mounted. Headless renderers and
+       SEO crawlers ship the visible default and never see a blank page. */
+    document.documentElement.classList.add("js-reveal-armed");
     const els = Array.from(document.querySelectorAll<HTMLElement>(".reveal"));
     els.forEach((el, i) => {
       el.style.transitionDelay = `${(i % 3) * 70}ms`;

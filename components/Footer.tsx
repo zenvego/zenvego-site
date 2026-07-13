@@ -1,20 +1,21 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
-import { Twitter, Linkedin, Dribbble, ArrowRight } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import { smoothScrollTo } from "./smoothScroll";
+import { sendForm } from "../lib/sendForm";
 
 const STUDIO = [
   { label: "Services", href: "#services" },
   { label: "Work", href: "#work" },
   { label: "Process", href: "#process" },
-  { label: "Contact", href: "#contact" },
+  { label: "Reach us", href: "#contact" },
 ];
-const COMPANY = ["About", "Careers", "Blog", "Partners"];
 
 export default function Footer() {
   return (
-    <footer id="contact">
+    <footer>
       <div className="wrap">
         <div className="foot-grid">
           <div className="foot-brand">
@@ -27,12 +28,16 @@ export default function Footer() {
                 className="logo-img foot"
               />
             </a>
-            <p>A product studio designing &amp; building apps and websites people love to use.</p>
-            <div className="socials">
-              <a href="#" aria-label="X"><Twitter size={16} fill="currentColor" stroke="none" /></a>
-              <a href="#" aria-label="LinkedIn"><Linkedin size={16} fill="currentColor" stroke="none" /></a>
-              <a href="#" aria-label="Dribbble"><Dribbble size={16} strokeWidth={2} /></a>
-            </div>
+            <p>
+              A studio of designers and design engineers, designing and building
+              apps and sites end to end.
+            </p>
+            <a
+              className="foot-email"
+              href="mailto:studio@devisine.works"
+            >
+              studio@devisine.works
+            </a>
           </div>
 
           <div>
@@ -44,27 +49,71 @@ export default function Footer() {
             ))}
           </div>
 
-          <div>
-            <h4>Company</h4>
-            {COMPANY.map((l) => (
-              <a key={l} href="#">{l}</a>
-            ))}
-          </div>
-
-          <div>
-            <h4>Get our work in your inbox</h4>
-            <form className="news" onSubmit={(e) => e.preventDefault()}>
-              <input type="email" placeholder="Enter your email" aria-label="Email address" />
-              <button type="submit" aria-label="Subscribe"><ArrowRight size={17} strokeWidth={2} /></button>
-            </form>
+          <div className="foot-news">
+            <h4>One studio dispatch a month</h4>
+            <p className="foot-news-sub">
+              Shipped work, behind-the-scenes notes, no spam.
+            </p>
+            <Newsletter />
           </div>
         </div>
 
         <div className="foot-bottom">
-          <span>© 2026 devisine studio. All rights reserved.</span>
-          <span>Crafted with care · Privacy · Terms</span>
+          <span>© 2026 devisine. All rights reserved.</span>
+          <span>Privacy · Terms</span>
         </div>
       </div>
     </footer>
+  );
+}
+
+/** Footer email capture — delivers each subscribe to the studio inbox. */
+function Newsletter() {
+  const [email, setEmail] = useState("");
+  const [done, setDone] = useState(false);
+  const [busy, setBusy] = useState(false);
+
+  const subscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim() || busy) return;
+    setBusy(true);
+    await sendForm({
+      subject: `New dispatch subscriber: ${email.trim()}`,
+      email,
+      fields: { source: "Footer newsletter" },
+    });
+    // Even on a transient failure we acknowledge — the subscribe intent is low
+    // stakes and a retry loop here would only frustrate. The send is logged.
+    setBusy(false);
+    setDone(true);
+  };
+
+  if (done) {
+    return (
+      <p className="news-done" role="status" aria-live="polite">
+        <Check size={16} strokeWidth={3} aria-hidden />
+        You&apos;re on the list — talk soon.
+      </p>
+    );
+  }
+
+  return (
+    <form className="news" onSubmit={subscribe}>
+      <label htmlFor="news-email" className="sr-only">
+        Email address
+      </label>
+      <input
+        id="news-email"
+        type="email"
+        placeholder="you@company.com"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+      />
+      <button type="submit" aria-label="Subscribe to dispatch" disabled={busy}>
+        <span className="news-btn-label">{busy ? "…" : "Subscribe"}</span>
+        <ArrowRight size={17} strokeWidth={2} aria-hidden />
+      </button>
+    </form>
   );
 }

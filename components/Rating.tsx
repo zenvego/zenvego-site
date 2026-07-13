@@ -7,9 +7,9 @@ export default function Rating() {
         <span className="stk">
           <Star size={20} fill="currentColor" stroke="none" />
         </span>
-        <b>4.9</b>/5
+        <b>4.5</b>/5
       </div>
-      <small>Rated by 40+ teams on Clutch &amp; Google</small>
+      <small>Rated by 5+ teams on Clutch &amp; Google</small>
     </div>
   );
 }

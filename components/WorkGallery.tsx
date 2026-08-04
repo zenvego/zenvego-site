@@ -9,6 +9,7 @@ import {
   Check,
   ChevronLeft,
   ChevronRight,
+  ExternalLink,
 } from "lucide-react";
 import { openProjectModal } from "./ProjectModal";
 import { useReducedMotion } from "./useReducedMotion";
@@ -36,12 +37,51 @@ type Project = {
   bg: string;
   images?: string[];
   mediaKind?: "phones" | "screens";
+  url?: string;
   study: CaseStudy;
 };
 
 const PROJECTS: Project[] = [
   {
     num: "01",
+    label: "Zenvego",
+    cat: "D2C Food Brand · Subscription · Web",
+    title: "Zenvego",
+    desc: "A brand and landing site for a plant-based breakfast bowl subscription in Gachibowli — fresh bowls cut every morning and delivered to your door, with a five-bowl menu, an interactive Zen Planner nutrition calculator, and WhatsApp-first ordering.",
+    tags: ["Brand Design", "Web Design", "Landing Page", "Illustration"],
+    metric: (
+      <>
+        <Star size={14} fill="currentColor" stroke="none" />
+        Plant-Based D2C Brand
+      </>
+    ),
+    bg: "radial-gradient(120% 120% at 80% 10%, #2d4a22 0%, #16260f 45%, #0a1206 100%)",
+    mediaKind: "screens",
+    images: ["/assets/zenvego-1.png", "/assets/zenvego-2.png"],
+    url: "https://zenvego.com",
+    study: {
+      stats: [
+        { value: "5", unit: "bowls", label: "Signature menu" },
+        { value: "6", unit: "days", label: "Fresh mornings a week" },
+        { value: "1", unit: "chat", label: "WhatsApp ordering" },
+      ],
+      challenge:
+        "Zenvego needed to sell a daily breakfast ritual — not just food. The site had to feel as calm as the brand promise, explain weekly and monthly plans in seconds, and let customers subscribe with a single WhatsApp message instead of an app or account.",
+      did: [
+        "A warm, hand-crafted brand identity and illustration system",
+        "A five-bowl menu with pricing, nutrition, and plan toggles",
+        "The Zen Planner — an interactive protein, fibre, and calorie calculator",
+        "A WhatsApp-first ordering flow with UPI payment, no app, no lock-in",
+      ],
+      quote:
+        "The site feels exactly like our bowls — calm, fresh, and simple. Customers get it in one scroll and order in one message.",
+      author: "Harsha Reddy",
+      role: "Founder, Zenvego",
+      avatar: "linear-gradient(135deg, #f0a04b, #4cc46a)",
+    },
+  },
+  {
+    num: "02",
     label: "Student Teach",
     cat: "EdTech · iOS & Android",
     title: "Student Teach",
@@ -81,77 +121,40 @@ const PROJECTS: Project[] = [
     },
   },
   {
-    num: "02",
-    label: "NYRA Sales Dashboard",
-    cat: "Enterprise Platform · Sales Operations · Web",
-    title: "NYRA Sales Performance Dashboard",
-    desc: "A centralized sales management platform with real-time visibility into team performance, pipeline health, quota attainment, and conversion metrics — helping leaders monitor KPIs, coach reps, and drive revenue.",
-    tags: ["Product Design", "Dashboard Design", "SaaS Platform", "Data Visualization"],
-    metric: (
-      <>
-        <Star size={14} fill="currentColor" stroke="none" />
-        Enterprise CRM Dashboard
-      </>
-    ),
-    bg: "radial-gradient(120% 120% at 80% 10%, #10303a 0%, #0c1a1e 45%, #070f11 100%)",
-    mediaKind: "screens",
-    images: ["/assets/nyra-1.png", "/assets/nyra-2.png"],
-    study: {
-      stats: [
-        { value: "1", unit: "view", label: "Single source of truth" },
-        { value: "−40", unit: "%", label: "Reporting time" },
-        { value: "8", unit: "KPIs", label: "Tracked live" },
-      ],
-      challenge:
-        "Sales leaders were stitching pipeline numbers together from spreadsheets and stale exports. Coaching was reactive and quota risk surfaced too late. They needed real-time visibility in one screen.",
-      did: [
-        "Real-time view of team performance and pipeline health",
-        "Quota attainment and conversion metrics at a glance",
-        "Drill-downs that let leaders coach individual reps",
-        "A clean data-visualization system built to scale",
-      ],
-      quote:
-        "We finally see the whole sales picture in real time — coaching is proactive now, not a post-mortem.",
-      author: "Daniel Okafor",
-      role: "VP of Sales",
-      avatar: "linear-gradient(135deg, #8fd3f4, #34d6c3)",
-    },
-  },
-  {
     num: "03",
-    label: "Recruit",
-    cat: "Recruitment Platform · Web · HR Tech",
-    title: "Recruit",
-    desc: "An AI-powered recruitment platform for managing hiring workflows end to end — post jobs, track applicants, manage pipelines, match candidates to roles, schedule interviews, and collaborate with hiring teams from one centralized dashboard.",
-    tags: ["Product Design", "HR Tech", "Recruitment Platform", "AI Matching"],
+    label: "ScorVault",
+    cat: "Sports Platform · Matchmaking · Web",
+    title: "ScorVault",
+    desc: "A multi-sport platform for cricket, badminton, and pickleball — match with players near you, run tournaments with live ball-by-ball scoring and auto-generated brackets, climb ladder rankings, and earn Volts, a rewards currency you can cash in for gear and court time.",
+    tags: ["Product Design", "Sports Tech", "Gamification", "Web Platform"],
     metric: (
       <>
         <Star size={14} fill="currentColor" stroke="none" />
-        AI-Powered Hiring Platform
+        Multi-Sport Platform
       </>
     ),
-    bg: "radial-gradient(120% 120% at 50% 0%, #1c2440 0%, #0f1424 45%, #080b14 100%)",
+    bg: "radial-gradient(120% 120% at 50% 0%, #0e2430 0%, #0a1520 45%, #060b12 100%)",
     mediaKind: "screens",
-    images: ["/assets/recruit-1.png", "/assets/recruit-2.png"],
+    images: ["/assets/score-1.png", "/assets/score-2.png"],
     study: {
       stats: [
-        { value: "126", unit: "+", label: "Candidates managed" },
-        { value: "3.2", unit: "%", label: "Overall conversion" },
-        { value: "AI", unit: "match", label: "Role-fit scoring" },
+        { value: "12.4k", unit: "+", label: "Players" },
+        { value: "850", unit: "+", label: "Tournaments run" },
+        { value: "3", unit: "sports", label: "One vault, every court" },
       ],
       challenge:
-        "Recruiters were spread across job boards, spreadsheets, and inboxes — sourcing, tracking, and follow-ups all lived in different places. Pipelines went stale and great candidates slipped through the cracks.",
+        "Local cricket, badminton, and pickleball scenes ran on WhatsApp groups and paper scorecards — no way to find opponents at your level, no official-feeling tournaments, and every close call turned into an argument. Players needed one platform that made every match count.",
       did: [
-        "End-to-end hiring workflow from sourcing to placement",
-        "AI matching that scores candidates against each role",
-        "Visual pipelines, interview scheduling, and follow-ups",
-        "A centralized dashboard for the whole hiring team",
+        "Skill-based matchmaking that finds verified players near you",
+        "Tournaments with live ball-by-ball scoring and auto-generated brackets",
+        "Volts — a rewards currency with tiers, redeemable for gear and court time",
+        "Live ladders and weekly leaderboards across all three sports",
       ],
       quote:
-        "Recruit put our entire hiring pipeline in one place — we place candidates faster and nothing falls through anymore.",
-      author: "Nithish Kumar",
-      role: "Lead Recruiter",
-      avatar: "linear-gradient(135deg, #6b8bff, #3a52e6)",
+        "Set up a 24-team box-cricket cup in ten minutes. The live scoring ended every 'was that a six?' argument for good.",
+      author: "Rohan Kapoor",
+      role: "Cricket · Mumbai",
+      avatar: "linear-gradient(135deg, #a3ff3c, #2dd4bf)",
     },
   },
 ];
@@ -315,6 +318,17 @@ export default function WorkGallery() {
                 >
                   View case study <ArrowRight size={15} strokeWidth={2.2} />
                 </button>
+                {p.url && (
+                  <a
+                    className="wcta wcta--live"
+                    href={p.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {p.url.replace(/^https?:\/\//, "")}{" "}
+                    <ExternalLink size={14} strokeWidth={2.2} />
+                  </a>
+                )}
               </div>
               <div className="wprog" />
             </div>
@@ -390,6 +404,17 @@ export default function WorkGallery() {
                 </figure>
 
                 <div className="csm-foot">
+                  {p.url && (
+                    <a
+                      className="csm-live"
+                      href={p.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Visit live site — {p.url.replace(/^https?:\/\//, "")}{" "}
+                      <ExternalLink size={15} strokeWidth={2.4} />
+                    </a>
+                  )}
                   <div className="csm-nav">
                     <button type="button" onClick={prev}>
                       <ChevronLeft size={16} strokeWidth={2.4} /> Previous

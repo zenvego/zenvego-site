@@ -25,7 +25,7 @@ const STUDIO = {
   // What the keyless Google map geocodes + centers on. Kept separate from the
   // printed address so the pin lands on Gachibowli, Hyderabad.
   mapLabel: "Gachibowli, Hyderabad, India",
-  email: "contact@zenvego.works",
+  email: "hello@zenvego.works",
   hours: "Mon–Fri, 9:30–18:30 IST",
   responds: "Replies within one business day",
 };

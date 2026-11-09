@@ -35,9 +35,9 @@ export default function Footer() {
             </p>
             <a
               className="foot-email"
-              href="mailto:hello@zenvego.works"
+              href="mailto:contact@zenvego.works"
             >
-              hello@zenvego.works
+              contact@zenvego.works
             </a>
           </div>
 

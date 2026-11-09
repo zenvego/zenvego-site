@@ -1,12 +1,12 @@
 {
   "schemaVersion": 2,
   "generatedAt": "2026-06-09T00:00:00Z",
-  "title": "Design System: devisine",
+  "title": "Design System: Zenvego",
   "extensions": {
     "colorMeta": {
       "green": {
         "role": "primary",
-        "displayName": "devisine Green",
+        "displayName": "Zenvego Green",
         "canonical": "oklch(0.745 0.176 148)",
         "tonalRamp": [
           "oklch(0.18 0.06 148)",
@@ -261,7 +261,7 @@
   ],
   "narrative": {
     "northStar": "The Senior Studio Floor",
-    "overview": "devisine reads like walking into a real working studio: confident on the surface, busy underneath, quiet over the top. The page does not pose for the camera. There's no stage set, no lobby art, no marketing veneer; what's pinned to the wall is the actual work, and what's said is what the studio actually does. A founder closing the tab should think 'those people know what they're doing,' not 'wow, what a site.'\n\nThe system is anchored by two surfaces and one voice. A near-black dark band carries the nav, hero, and footer. A mint wash with a faint emerald 48px grid carries everything else, unbroken across section seams. The brand speaks in mint and green; the other accents are reserved for illustration and never carry primary UI.\n\nThis system explicitly rejects the generic agency template, the overdesigned portfolio, the crypto/AI hype aesthetic, and the stuffy corporate consultancy.",
+    "overview": "Zenvego reads like walking into a real working studio: confident on the surface, busy underneath, quiet over the top. The page does not pose for the camera. There's no stage set, no lobby art, no marketing veneer; what's pinned to the wall is the actual work, and what's said is what the studio actually does. A founder closing the tab should think 'those people know what they're doing,' not 'wow, what a site.'\n\nThe system is anchored by two surfaces and one voice. A near-black dark band carries the nav, hero, and footer. A mint wash with a faint emerald 48px grid carries everything else, unbroken across section seams. The brand speaks in mint and green; the other accents are reserved for illustration and never carry primary UI.\n\nThis system explicitly rejects the generic agency template, the overdesigned portfolio, the crypto/AI hype aesthetic, and the stuffy corporate consultancy.",
     "keyCharacteristics": [
       "One color voice: green. Other hues are illustration only, never primary UI.",
       "Two structural surfaces: dark band (nav + hero + footer) and mint page wash everywhere else.",

@@ -2,7 +2,7 @@
 
 ## Design Context
 
-This project ships a single-page marketing site for **devisine**, a senior design and development studio. The strategic and visual context for design work lives in two root files:
+This project ships a single-page marketing site for **Zenvego**, a senior design and development studio. The strategic and visual context for design work lives in two root files:
 
 - [`PRODUCT.md`](./PRODUCT.md) — register, users, purpose, brand personality, anti-references, accessibility target.
 - [`DESIGN.md`](./DESIGN.md) — visual system (palette, typography, components, do's and don'ts). Frontmatter is normative.

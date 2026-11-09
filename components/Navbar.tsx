@@ -28,13 +28,14 @@ export default function Navbar() {
           className="flex items-center gap-[11px]"
           href="#top"
           onClick={(e) => handle(e, "#top")}
-          aria-label="devisine home"
+          aria-label="Zenvego home"
         >
           <Image
-            src="/assets/devisine-logo.png"
-            alt="devisine"
-            width={180}
+            src="/assets/zenvego-logo.svg"
+            alt="Zenvego"
+            width={224}
             height={66}
+            unoptimized
             className="logo-img"
             priority
           />

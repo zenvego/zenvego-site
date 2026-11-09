@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import { smoothScrollTo } from "./smoothScroll";
 
-const DISMISS_KEY = "devisine:announce-2026-services";
+const DISMISS_KEY = "zenvego:announce-2026-services";
 
 export default function AnnouncementBar() {
   const [hidden, setHidden] = useState(false);

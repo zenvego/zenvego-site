@@ -10,7 +10,7 @@ import { sendForm } from "../lib/sendForm";
  * "Start a project" modal. Components stay decoupled — they just dispatch an
  * event and <ProjectModal/> (mounted once in the page) handles the rest.
  */
-export const OPEN_EVENT = "devisine:open-project-modal";
+export const OPEN_EVENT = "zenvego:open-project-modal";
 
 export function openProjectModal() {
   window.dispatchEvent(new Event(OPEN_EVENT));
@@ -151,10 +151,11 @@ export default function ProjectModal() {
         {phase !== "message" && (
           <aside className="pm-aside">
             <Image
-              src="/assets/devisine-logo.png"
-              alt="devisine"
-              width={210}
-              height={76}
+              src="/assets/zenvego-logo.svg"
+              alt="Zenvego"
+              width={244}
+              height={72}
+              unoptimized
               className="pm-logo"
             />
             <div className="pm-aside-body">
@@ -187,7 +188,7 @@ export default function ProjectModal() {
                   ))}
                 </span>
                 <span className="pm-trust-tx">
-                  <b>100+ teams</b> trust devisine
+                  <b>100+ teams</b> trust Zenvego
                   <em>4.8★ average rating</em>
                 </span>
               </div>

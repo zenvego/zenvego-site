@@ -13,8 +13,8 @@ type Stat = {
 
 /* Replace these with real numbers as the studio publishes them. */
 const STATS: Stat[] = [
-  { value: 8, suffix: " yrs", label: "Building product studios" },
-  { value: 60, suffix: "+", label: "Apps and sites shipped" },
+  { value: 1, suffix: " yr", label: "Building products" },
+  { value: 11, suffix: "+", label: "Apps and sites shipped" },
   { value: 5, suffix: " wks", label: "Average kickoff to first user" },
   { value: 70, suffix: "%", label: "Work from returning or referred clients" },
 ];

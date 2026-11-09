@@ -17,7 +17,7 @@ import { sendForm } from "../lib/sendForm";
  * Studio contact details. The address drives both the printed card and the
  * keyless Google Maps embed.
  *
- * TODO(devisine): replace `address` with the real studio address. The map needs
+ * TODO(zenvego): replace `address` with the real studio address. The map needs
  * no API key — it geocodes this string. `email` mirrors the footer.
  */
 const STUDIO = {
@@ -25,7 +25,7 @@ const STUDIO = {
   // What the keyless Google map geocodes + centers on. Kept separate from the
   // printed address so the pin lands on Gachibowli, Hyderabad.
   mapLabel: "Gachibowli, Hyderabad, India",
-  email: "studio@devisine.works",
+  email: "studio@zenvego.works",
   hours: "Mon–Fri, 9:30–18:30 IST",
   responds: "Replies within one business day",
 };
@@ -260,7 +260,7 @@ export default function Contact() {
           <div className="contact-info reveal">
             <figure className="contact-map">
               <iframe
-                title={`Map showing devisine studio at ${fullAddress}`}
+                title={`Map showing Zenvego studio at ${fullAddress}`}
                 src={MAP_EMBED}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"

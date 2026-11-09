@@ -8,7 +8,7 @@ brand
 
 Founders and CEOs actively shopping for a design and development studio. They're typically comparing three to five studios for a real upcoming build (a new product, a redesign, a market move) and have a budget that justifies a senior team. They arrive skeptical: most studio sites look the same to them, so they read fast and bounce faster. Half are cold (paid, organic, social), half are warm (referrals from their network).
 
-The job they're trying to get done: decide, in under two minutes of skimming, whether devisine is worth a 30-minute intro call. They're not buying services, they're buying confidence that the team they hire won't waste the next four months.
+The job they're trying to get done: decide, in under two minutes of skimming, whether Zenvego is worth a 30-minute intro call. They're not buying services, they're buying confidence that the team they hire won't waste the next four months.
 
 ## Product Purpose
 

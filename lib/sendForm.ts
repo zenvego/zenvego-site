@@ -40,7 +40,7 @@ export async function sendForm({ subject, email, fields = {} }: FormPayload): Pr
   const body: Record<string, string> = {
     access_key: ACCESS_KEY,
     subject,
-    from_name: "devisine site",
+    from_name: "Zenvego site",
     email: email.trim(),
   };
   for (const [k, v] of Object.entries(fields)) {

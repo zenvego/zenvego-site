@@ -17,9 +17,9 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "devisine — Design & Development Studio",
+  title: "Zenvego — Design & Development Studio",
   description:
-    "devisine designs & builds beautiful apps and websites for ambitious teams.",
+    "Zenvego designs & builds beautiful apps and websites for ambitious teams.",
 };
 
 export default function RootLayout({

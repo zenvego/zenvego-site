@@ -19,12 +19,13 @@ export default function Footer() {
       <div className="wrap">
         <div className="foot-grid">
           <div className="foot-brand">
-            <a className="flex items-center" href="#top" onClick={(e) => smoothScrollTo(e, "#top")} aria-label="devisine home">
+            <a className="flex items-center" href="#top" onClick={(e) => smoothScrollTo(e, "#top")} aria-label="Zenvego home">
               <Image
-                src="/assets/devisine-logo.png"
-                alt="devisine"
-                width={210}
+                src="/assets/zenvego-logo.svg"
+                alt="Zenvego"
+                width={257}
                 height={76}
+                unoptimized
                 className="logo-img foot"
               />
             </a>
@@ -34,9 +35,9 @@ export default function Footer() {
             </p>
             <a
               className="foot-email"
-              href="mailto:studio@devisine.works"
+              href="mailto:studio@zenvego.works"
             >
-              studio@devisine.works
+              studio@zenvego.works
             </a>
           </div>
 
@@ -59,7 +60,7 @@ export default function Footer() {
         </div>
 
         <div className="foot-bottom">
-          <span>© 2026 devisine. All rights reserved.</span>
+          <span>© 2026 Zenvego. All rights reserved.</span>
           <span>Privacy · Terms</span>
         </div>
       </div>

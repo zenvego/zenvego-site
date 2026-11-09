@@ -1,6 +1,6 @@
 ---
-name: devisine
-description: Design system for devisine, a senior design and development studio. Mint-washed surfaces, a single saturated green voice, type-led hierarchy.
+name: Zenvego
+description: Design system for Zenvego, a senior design and development studio. Mint-washed surfaces, a single saturated green voice, type-led hierarchy.
 colors:
   ink: "#14181a"
   dark: "#0c0e0d"
@@ -120,13 +120,13 @@ components:
     padding: "34px 36px"
 ---
 
-# Design System: devisine
+# Design System: Zenvego
 
 ## 1. Overview
 
 **Creative North Star: "The Senior Studio Floor"**
 
-devisine reads like walking into a real working studio: confident on the surface, busy underneath, quiet over the top. The page does not pose for the camera. There's no stage set, no lobby art, no marketing veneer; what's pinned to the wall is the actual work, and what's said is what the studio actually does. A founder closing the tab should think "those people know what they're doing," not "wow, what a site."
+Zenvego reads like walking into a real working studio: confident on the surface, busy underneath, quiet over the top. The page does not pose for the camera. There's no stage set, no lobby art, no marketing veneer; what's pinned to the wall is the actual work, and what's said is what the studio actually does. A founder closing the tab should think "those people know what they're doing," not "wow, what a site."
 
 The system is anchored by two surfaces and one voice. A near-black dark band (`#0c0e0d`) carries the nav, hero, and footer. A mint wash (`#e9f3ec`) with a faint emerald 48px grid carries everything else, unbroken across section seams. The brand speaks in mint and green: deep green (`#2c9a4c`) for type-as-accent, bright green (`#4cc46a`) for surfaces and CTAs. The other accent hues in the palette (orange, teal, purple, blue) are reserved for **illustration** (per-service identity in the service explorer, floating badges, code/UI demos). They never carry primary UI; that would dilute the voice.
 
@@ -145,7 +145,7 @@ This system explicitly rejects: the generic agency template (big stock hero vide
 A two-surface system: a deep, almost-black brand surface for the dark band, and a mint-washed cream-green for everything else. The brand voice is carried by a single saturated green family. Four illustration accents exist for per-service identity and should never bleed into primary UI roles.
 
 ### Primary
-- **devisine Green** (`#4cc46a`): the brand. CTAs, primary buttons, the `.gpill` chips, active states, the active orbital node, the highlight in the studio "travelling-light" border, every signal that something is the **right** answer.
+- **Zenvego Green** (`#4cc46a`): the brand. CTAs, primary buttons, the `.gpill` chips, active states, the active orbital node, the highlight in the studio "travelling-light" border, every signal that something is the **right** answer.
 - **Deep Green** (`#2c9a4c`): green-as-type. Eyebrow labels, link colors, active nav state, the inline "engineers." accent in the studio headline. The version of green that has to sit on white and not vibrate.
 - **Bright Green** (`#6bdd86`): hover and bloom. Button hover backgrounds, the brighter end of the conic sweep, the cursor blink in the code demo.
 - **Ink on Green** (`#06210f`): the only foreground color allowed on a green surface. Hits 7.4:1 against `#4cc46a`. Don't use white text on green.

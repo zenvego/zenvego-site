@@ -152,7 +152,7 @@ export function DashboardCard() {
         <i></i>
         <i></i>
         <i></i>
-        <span className="u">app.devisine.io/analytics</span>
+        <span className="u">app.zenvego.io/analytics</span>
       </div>
       <div style={{ display: "flex", height: "calc(100% - 43px)" }}>
         <div style={{ width: 46, borderRight: "1px solid rgba(0,0,0,.06)", display: "flex", flexDirection: "column", alignItems: "center", gap: 15, paddingTop: 16 }}>
@@ -298,7 +298,7 @@ export function ProofCard() {
       </div>
       <div className="fh grn" style={{ fontSize: 18, marginTop: 10 }}>20+ projects shipped</div>
       <div className="mut" style={{ fontSize: 10.5, marginTop: 9, lineHeight: 1.55 }}>
-        Design &amp; engineering teams trust devisine to ship their flagship products.
+        Design &amp; engineering teams trust Zenvego to ship their flagship products.
       </div>
       <div style={{ height: 1, background: "rgba(0,0,0,.08)", margin: "22px 0" }}></div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>

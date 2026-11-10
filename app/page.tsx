@@ -2,6 +2,8 @@ import AnnouncementBar from "@/components/AnnouncementBar";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import WhatWeDo from "@/components/WhatWeDo";
+import Systems from "@/components/Systems";
+import GrowthCalculator from "@/components/GrowthCalculator";
 import WorkGallery from "@/components/WorkGallery";
 import Process from "@/components/Process";
 import Studio from "@/components/Studio";
@@ -26,6 +28,8 @@ export default function Home() {
       </div>
       <main id="main">
         <WhatWeDo />
+        <Systems />
+        <GrowthCalculator />
         <WorkGallery />
         <Process />
         <Studio />

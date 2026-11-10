@@ -15,10 +15,11 @@ export default function Hero() {
       </div>
 
       <div className="wrap hero-copy">
-        <h1>Apps and sites, built like senior product work.</h1>
+        <h1>We design and build your product, then hand you the keys.</h1>
         <p className="lead">
-          <b>Zenvego</b> is a small studio of designers and design engineers.
-          We design and build the product, then hand it over.
+          Websites, web apps and mobile apps made by a small team of senior
+          designers and engineers. You see a working build every week, not a
+          slide about progress.
         </p>
         <div className="hero-cta">
           <button
